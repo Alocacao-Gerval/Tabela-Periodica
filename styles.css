@@ -1,0 +1,231 @@
+/* Basic reset */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  color: #0f172a;
+  background: #ffffff;
+}
+
+/* Topbar */
+.topbar{
+  padding: 16px 18px 10px 18px;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 10;
+}
+
+.title-block h1{
+  font-size: 18px;
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+.subtitle{
+  margin-top: 4px;
+  font-size: 12px;
+  color: #475569;
+}
+
+/* Controls */
+.controls{ margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+.control-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: flex-end;
+}
+.control-group{ display: flex; flex-direction: column; gap: 6px; }
+.control-label{ font-size: 12px; color: #475569; }
+
+.segmented{
+  display: inline-flex;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f8fafc;
+}
+.segmented-btn{
+  border: 0;
+  padding: 8px 10px;
+  background: transparent;
+  font-size: 12px;
+  color: #0f172a;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.segmented-btn:hover{ background: #eef2ff; }
+.segmented-btn.is-active{
+  background: #0f172a;
+  color: #fff;
+}
+
+.ref-asset select{
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 12px;
+  background: #fff;
+}
+
+.legend-row{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.legend-chip{
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  color: #334155;
+}
+.legend-swatch{
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.legend-gradient{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #334155;
+}
+.gradient-bar{
+  width: 220px;
+  height: 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: linear-gradient(90deg, #c81d25, #f1c453, #2a9d8f);
+}
+
+/* Main */
+.main{ padding: 16px 18px 28px; }
+
+.chart-wrap{
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px;
+  background: #fff;
+}
+
+.chart{
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+/* Column */
+.column{
+  min-width: 140px;
+  flex: 0 0 auto;
+}
+.col-header{
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.col-body{
+  position: relative;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+/* Baseline for relative modes */
+.baseline{
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #cbd5e1;
+  opacity: 0.85;
+}
+
+/* Card */
+.card{
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 44px;
+  border-radius: 10px;
+  padding: 7px 8px;
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: default;
+  user-select: none;
+  transition: transform 250ms ease, filter 180ms ease, box-shadow 180ms ease;
+  color: #0b1220;
+}
+.card .name{
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.card .val{
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.95;
+}
+
+/* Hover highlight across columns */
+.card.is-hovered{
+  outline: 2px solid rgba(15, 23, 42, 0.55);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+  filter: saturate(1.02) contrast(1.02);
+  z-index: 3;
+}
+.card.is-dimmed{
+  filter: saturate(0.80) opacity(0.62);
+}
+
+/* Tooltip */
+.tooltip{
+  position: fixed;
+  pointer-events: none;
+  z-index: 999;
+  background: rgba(15, 23, 42, 0.96);
+  color: #fff;
+  padding: 10px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  max-width: 280px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+.tooltip .t-title{
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.tooltip .t-row{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 2px;
+  opacity: 0.95;
+}
+.tooltip .t-row span:first-child{ opacity: 0.78; }
+.footnote{
+  margin-top: 10px;
+  font-size: 12px;
+  color: #334155;
+}
+.footnote .muted{ margin-top: 4px; color: #64748b; }
+
+@media (max-width: 760px){
+  .column{ min-width: 132px; }
+  .gradient-bar{ width: 160px; }
+}

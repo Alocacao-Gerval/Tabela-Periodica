@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Return Map</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="title-block">
+      <h1>Return Map</h1>
+      <div class="subtitle" id="subtitle">Carregando dados…</div>
+    </div>
+
+    <div class="controls">
+      <div class="control-row">
+        <div class="control-group">
+          <div class="control-label">Geografia</div>
+          <div class="segmented" role="group" aria-label="Geografia">
+            <button id="geo-br" class="segmented-btn is-active" type="button">Brasil</button>
+            <button id="geo-ex" class="segmented-btn" type="button">Exterior</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">Display</div>
+          <div class="segmented" role="group" aria-label="Display">
+            <button id="mode-stacked" class="segmented-btn is-active" type="button">Stacked</button>
+            <button id="mode-zero" class="segmented-btn" type="button">Relative to zero</button>
+            <button id="mode-asset" class="segmented-btn" type="button">Relative to asset</button>
+          </div>
+        </div>
+
+        <div class="control-group ref-asset" id="refAssetGroup" style="display:none;">
+          <div class="control-label">Ativo de referência</div>
+          <select id="refAssetSelect"></select>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">Highlight</div>
+          <div class="segmented" role="group" aria-label="Highlight">
+            <button id="hl-class" class="segmented-btn is-active" type="button">Asset class</button>
+            <button id="hl-return" class="segmented-btn" type="button">Return</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="legend-row" id="legendRow"></div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="chart-wrap">
+      <div class="chart" id="chart"></div>
+    </div>
+
+    <div class="footnote">
+      <div><strong>Aviso:</strong> desempenho passado não é garantia de resultados futuros.</div>
+      <div class="muted">Fonte: dados processados a partir do CSV do Quantum + registry interno.</div>
+    </div>
+  </main>
+
+  <div class="tooltip" id="tooltip" style="display:none;"></div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
