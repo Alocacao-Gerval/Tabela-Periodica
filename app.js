@@ -353,9 +353,20 @@ function prepareDataset(quantumRows, registryRows, datasetConfig, columns){
   };
 }
 
-// Layout computation
-const CARD_H = 44;
-const GAP = 8;
+// Layout computation (lido do CSS pra facilitar “ajustes sutis”)
+let CARD_H = 44;
+let GAP = 8;
+
+function cssNumber(varName, fallback){
+  const raw = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+  const n = parseFloat(raw);
+  return Number.isFinite(n) ? n : fallback;
+}
+
+function syncLayoutFromCSS(){
+  CARD_H = cssNumber("--rm-card-h", CARD_H);
+  GAP = cssNumber("--rm-row-gap", GAP);
+}
 
 function rankAssets(assets, colId){
   // sort desc, nulls last
@@ -772,6 +783,9 @@ function renderChart(dataset){
       card.className = "card";
       card.dataset.assetId = a.id;
       card.dataset.colId = col.id;
+      if (state.displayMode === "asset" && a.id === state.referenceAssetId) {
+  card.classList.add("is-ref");
+}
 
       // Color
       let bg = "#e2e8f0";
