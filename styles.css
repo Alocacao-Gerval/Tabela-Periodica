@@ -192,6 +192,10 @@ body {
 .card.is-dimmed{
   filter: saturate(0.80) opacity(0.62);
 }
+.card.is-ref{
+  outline: 3px solid rgba(15,23,42,.55);
+  outline-offset: 1px;
+}
 
 /* Tooltip */
 .tooltip{
