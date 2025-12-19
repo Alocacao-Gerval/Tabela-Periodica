@@ -19,7 +19,7 @@ const DATASETS = {
 let state = {
   geography: "br",
   displayMode: "stacked", // stacked | zero | asset
-  highlightMode: "class", // class | return
+  highlightMode: "class", // class | asset | return
   referenceAssetId: null,
   hoveredAssetId: null,
 };
@@ -40,11 +40,34 @@ const btn = {
   modeZero: document.getElementById("mode-zero"),
   modeAsset: document.getElementById("mode-asset"),
   hlClass: document.getElementById("hl-class"),
+  // Pode não existir no HTML (nós criamos via JS se faltar)
+  hlAsset: document.getElementById("hl-asset"),
   hlReturn: document.getElementById("hl-return"),
 };
 
 function setActive(el, active){
   el.classList.toggle("is-active", !!active);
+}
+
+// Deixa os highlights em PT-BR e cria o botão "Ativo" caso não exista no HTML
+function initHighlightButtons(){
+  // Renomeia labels
+  if (btn.hlClass) btn.hlClass.textContent = "Classe";
+  if (btn.hlReturn) btn.hlReturn.textContent = "Retorno";
+
+  const group = document.querySelector('.segmented[aria-label="Highlight"]');
+  if (!btn.hlAsset && group){
+    const b = document.createElement("button");
+    b.id = "hl-asset";
+    b.type = "button";
+    b.className = "segmented-btn";
+    b.textContent = "Ativo";
+    // Insere entre Classe e Retorno (se existir)
+    if (btn.hlReturn) group.insertBefore(b, btn.hlReturn);
+    else group.appendChild(b);
+    btn.hlAsset = b;
+  }
+  if (btn.hlAsset) btn.hlAsset.textContent = "Ativo";
 }
 
 // Basic utilities
@@ -319,7 +342,15 @@ function prepareDataset(quantumRows, registryRows, datasetConfig, columns){
 
   const colDefs = [...columns.returnCols, ...columns.metricCols];
 
-  return { assets, colDefs, subtitle, rfAnnualised, periodText, rfName: datasetConfig.riskFreeQuantumName };
+  return {
+    assets,
+    colDefs,
+    subtitle,
+    rfAnnualised,
+    periodText,
+    rfName: datasetConfig.riskFreeQuantumName,
+    rfAssetId: rfAsset?.id ?? null,
+  };
 }
 
 // Layout computation
@@ -498,26 +529,21 @@ if (displayMode === "zero"){
   return computePositions(dataset, "stacked", null);
 }
 
-// Color scale for Return highlight (diverging red -> yellow -> green)
-// Return highlight (red -> yellow -> green), sempre "menor -> maior" (por coluna)
+// Color scale for "Retorno" highlight
+// Divergente: vermelho (abaixo do RF) -> amarelo (RF) -> verde (acima do RF)
+// Para colunas onde "menor é melhor" (ex.: Vol.), usamos reverse=true.
 function valueToColor(v, scale){
   if (!Number.isFinite(v) || !scale || !Number.isFinite(scale.min) || !Number.isFinite(scale.max)){
     return "#e2e8f0";
   }
 
-  const min = scale.min;
-  const max = scale.max;
-  const span = (max - min);
-
-  // 0 = menor, 1 = maior
-  let t = (span === 0) ? 0.5 : (v - min) / span;
-  t = Math.max(0, Math.min(1, t));
-
-  const c1 = [200, 29, 37];    // red-ish (menor)
-  const c2 = [241, 196, 83];   // yellow-ish (meio)
-  const c3 = [42, 157, 143];   // green-ish (maior)
+  // Paleta (mesma do prototype)
+  const c1 = [200, 29, 37];    // red-ish
+  const c2 = [241, 196, 83];   // yellow-ish (neutro)
+  const c3 = [42, 157, 143];   // green-ish
 
   function lerp(a,b,t){ return a + (b-a)*t; }
+  function clamp01(x){ return Math.max(0, Math.min(1, x)); }
   function mix(a,b,t){
     return [
       Math.round(lerp(a[0],b[0],t)),
@@ -526,12 +552,40 @@ function valueToColor(v, scale){
     ];
   }
 
-  let rgb;
-  if (t < 0.5){
-    rgb = mix(c1, c2, t/0.5);
-  } else {
-    rgb = mix(c2, c3, (t-0.5)/0.5);
+  let min = scale.min;
+  let max = scale.max;
+  let pivot = scale.pivot;
+
+  // Se menor for melhor (volatilidade), invertimos o eixo
+  if (scale.reverse){
+    const v2 = -v;
+    const min2 = -max;
+    const max2 = -min;
+    const pivot2 = Number.isFinite(pivot) ? -pivot : pivot;
+    v = v2; min = min2; max = max2; pivot = pivot2;
   }
+
+  if (!Number.isFinite(pivot)) pivot = (min + max) / 2;
+  // Garante pivot dentro do range
+  pivot = Math.max(min, Math.min(max, pivot));
+
+  // Caso degenerado
+  if (max === min){
+    return `rgb(${c2[0]},${c2[1]},${c2[2]})`;
+  }
+
+  // Segmento 1: min -> pivot (vermelho -> amarelo)
+  if (v <= pivot){
+    const denom = (pivot - min);
+    const t = denom === 0 ? 1 : clamp01((v - min) / denom);
+    const rgb = mix(c1, c2, t);
+    return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+  }
+
+  // Segmento 2: pivot -> max (amarelo -> verde)
+  const denom = (max - pivot);
+  const t = denom === 0 ? 1 : clamp01((v - pivot) / denom);
+  const rgb = mix(c2, c3, t);
   return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
 }
 
@@ -549,10 +603,13 @@ function pickColorForClass(cls){
 }
 
 function computeReturnScale(dataset){
-  const { assets, colDefs } = dataset;
+  const { assets, colDefs, rfAssetId } = dataset;
 
   // Escala POR COLUNA (cada ano/coluna tem seu próprio degrade)
+  // Pivot (neutro): RF da coluna (CDI no BR / SOFR no EX)
   const scales = {};
+
+  const rfAsset = rfAssetId ? assets.find(a => a.id === rfAssetId) : null;
 
   for (const col of colDefs){
     let min = Infinity;
@@ -563,12 +620,29 @@ function computeReturnScale(dataset){
       min = Math.min(min, v);
       max = Math.max(max, v);
     }
+
     if (min === Infinity){
-      scales[col.id] = { min: NaN, max: NaN };
-    } else {
-      scales[col.id] = { min, max };
+      scales[col.id] = { min: NaN, max: NaN, pivot: NaN, reverse: false };
+      continue;
     }
+
+    // Pivot default: RF na mesma coluna (se existir)
+    let pivot = rfAsset ? rfAsset.values[col.id] : NaN;
+
+    // Colunas que já são "excesso" em relação ao RF
+    if (col.id === "annualised_excess") pivot = 0;
+    // Sharpe neutro em 0
+    if (col.id === "sharpe") pivot = 0;
+
+    // Volatilidade: menor é melhor
+    const reverse = (col.id === "vol");
+
+    // Se pivot não existir, cai para o meio do range
+    if (!Number.isFinite(pivot)) pivot = (min + max) / 2;
+
+    scales[col.id] = { min, max, pivot, reverse };
   }
+
   return scales;
 }
 
@@ -579,15 +653,20 @@ function renderLegend(dataset){
     const wrap = document.createElement("div");
     wrap.className = "legend-gradient";
     wrap.innerHTML = `
-      <span>Menor</span>
+      <span>Abaixo do ${dataset.rfName}</span>
       <div class="gradient-bar" aria-hidden="true"></div>
-      <span>Maior</span>
+      <span>Acima do ${dataset.rfName}</span>
     `;
     ui.legendRow.appendChild(wrap);
     return;
   }
 
-  // Asset class legend
+  // Highlight por ativo: não exibimos legenda (pode ficar enorme)
+  if (state.highlightMode === "asset"){
+    return;
+  }
+
+  // Legend por classe
   const classes = new Map();
   for (const a of dataset.assets){
     const cls = a.class || "Sem classe";
@@ -698,10 +777,14 @@ function renderChart(dataset){
       let bg = "#e2e8f0";
       if (state.highlightMode === "class"){
         const cls = a.class || "Sem classe";
-        bg = classColorMap.get(cls) || a.class_color || a.asset_color || "#e2e8f0";
+        bg = classColorMap.get(cls) || a.class_color || "#e2e8f0";
+      } else if (state.highlightMode === "asset"){
+        // Cor por ativo (asset_color do registry)
+        bg = (a.asset_color && a.asset_color.trim()) ? a.asset_color.trim() : "#e2e8f0";
       } else {
+        // Retorno: escala divergente com pivot no RF
         bg = valueToColor(v, retScale[col.id]);
-}
+      }
       card.style.background = bg;
 
       // Text
@@ -853,12 +936,25 @@ function wireUI(){
   // Highlight
   btn.hlClass.addEventListener("click", ()=>{
     state.highlightMode = "class";
-    setActive(btn.hlClass, true); setActive(btn.hlReturn, false);
+    setActive(btn.hlClass, true);
+    if (btn.hlAsset) setActive(btn.hlAsset, false);
+    setActive(btn.hlReturn, false);
     refresh();
   });
+  if (btn.hlAsset){
+    btn.hlAsset.addEventListener("click", ()=>{
+      state.highlightMode = "asset";
+      setActive(btn.hlClass, false);
+      setActive(btn.hlAsset, true);
+      setActive(btn.hlReturn, false);
+      refresh();
+    });
+  }
   btn.hlReturn.addEventListener("click", ()=>{
     state.highlightMode = "return";
-    setActive(btn.hlClass, false); setActive(btn.hlReturn, true);
+    setActive(btn.hlClass, false);
+    if (btn.hlAsset) setActive(btn.hlAsset, false);
+    setActive(btn.hlReturn, true);
     refresh();
   });
 
@@ -869,5 +965,6 @@ function wireUI(){
   });
 }
 
+initHighlightButtons();
 wireUI();
 refresh();
