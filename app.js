@@ -54,6 +54,7 @@ function normalize(str){
     .toLowerCase()
     .normalize("NFD")
     .replace(/\p{Diacritic}/gu, "")
+    .replace(/\uFFFD/g, "")      // remove replacement char (quando CSV não é UTF-8)
     .replace(/\s+/g, " ");
 }
 
@@ -152,20 +153,15 @@ function extractColumns(quantumHeader){
   let volCol = null;
   let maxDDCol = null;
 
-  const norm = (s) =>
-    String(s || "")
-      .trim()
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")   // remove acentos
-      .replace(/\uFFFD/g, "");          // remove o "�" (replacement char)
+  // (Opcional) retorno total do período completo (ex: 02/06/2015 até 31/12/2024)
+  let totalReturnCol = null;
 
   for (const h of quantumHeader){
-    const hs = String(h).trim();
-    const hn = norm(hs);
+    const hs = String(h || "").trim();
+    const hn = normalize(hs);
 
     // Retorno (anos / períodos)
-    // Aceita: "Retorno - diaria (...)" e também o caso quebrado "di�ria"
+    // Aceita "diária" e também CSV com encoding quebrado ("di�ria") via normalize()
     if (/^retorno\s*-\s*di.?ria\s*\(/.test(hn)){
       // (2016)
       const mYear = hs.match(/\((\d{4})\)/);
@@ -174,28 +170,43 @@ function extractColumns(quantumHeader){
         continue;
       }
 
-      // (02/06/2015 até 31/12/2015) — aqui não depende da palavra "até"
+      // (02/06/2015 até 31/12/2015) etc
       const mRange = hs.match(/\((\d{2}\/\d{2}\/\d{4}).*?(\d{2}\/\d{2}\/\d{4})\)/);
       if (mRange){
         const start = mRange[1];
         const end = mRange[2];
+        const startYear = start.slice(-4);
         const endYear = end.slice(-4);
-        const star = start.startsWith("01/01") ? "" : "*";
-        returnCols.push({ id: `${endYear}${star}`, label: `${endYear}${star}`, source: hs, kind: "return" });
+
+        // Só vira "coluna de ano" se o período estiver contido no MESMO ano
+        // (ex: 2015*). Se o período atravessa vários anos, isso é "retorno total do período"
+        if (startYear === endYear){
+          const isPartialYear = !start.startsWith("01/01") || !end.startsWith("31/12");
+          const label = `${endYear}${isPartialYear ? "*" : ""}`;
+          returnCols.push({ id: label, label, source: hs, kind: "return" });
+        } else {
+          totalReturnCol = hs;
+        }
         continue;
       }
-      continue;
     }
 
-    // Anualizado / Vol / Max DD (mesma lógica, sem depender do acento)
-    if (!annualisedCol && hn.startsWith("anualizado")) annualisedCol = hs;
-    if (!volCol && hn.startsWith("volatilidade")) volCol = hs;
-    if (!maxDDCol && (hn.includes("drawdown") || hn.includes("maximo drawdown") || hn.includes("maximo") && hn.includes("drawdown"))) {
+    // Colunas de métricas (robusto a acentos/encoding)
+    if (!annualisedCol && hn.includes("anualizado") && hn.includes("retorno")){
+      annualisedCol = hs;
+      continue;
+    }
+    if (!volCol && hn.includes("volatilidade")){
+      volCol = hs;
+      continue;
+    }
+    if (!maxDDCol && hn.includes("drawdown")){
       maxDDCol = hs;
+      continue;
     }
   }
 
-  // Sort returnCols by year-ish order
+  // Sort returnCols by year-ish
   function yearSortKey(col){
     const m = String(col.id).match(/(\d{4})/);
     return m ? Number(m[1]) : 9999;
@@ -210,7 +221,7 @@ function extractColumns(quantumHeader){
     { id: "max_dd", label: "Máx DD", kind: "metric", sort: "desc" },
   ];
 
-  return { returnCols, metricCols, annualisedCol, volCol, maxDDCol };
+  return { returnCols, metricCols, annualisedCol, volCol, maxDDCol, totalReturnCol };
 }
 
 // Prepare merged dataset (Quantum + Registry) and computed metrics (RF+, Sharpe)
@@ -357,40 +368,72 @@ function computePositions(dataset, displayMode, referenceAssetId){
     return { positions, baselines, height: colHeight };
   }
 
-  if (displayMode === "zero"){
-    // Each column baseline depends on how many positives it has
-    let maxHeight = 0;
+  
+if (displayMode === "zero"){
+    // Baseline (0%) alinhada ENTRE colunas (mesma altura), no estilo BlackRock
+    let globalMinY = Infinity;
+    let globalMaxY = -Infinity;
+    const yMaps = {}; // yMaps[colId][assetId] = y (inteiro)
+
     for (const col of colDefs){
       const ordered = ranks[col.id].map(id => ({ id, v: byId.get(id)?.values[col.id] }));
       const pos = ordered.filter(x => Number.isFinite(x.v) && x.v >= 0).sort((a,b)=>b.v - a.v);
-      const neg = ordered.filter(x => Number.isFinite(x.v) && x.v < 0).sort((a,b)=>b.v - a.v);
+      const neg = ordered.filter(x => Number.isFinite(x.v) && x.v < 0).sort((a,b)=>b.v - a.v); // mais perto do zero primeiro
+      const missing = ordered.filter(x => !Number.isFinite(x.v)).map(x => x.id);
 
+      const colY = {};
       const nPos = pos.length;
-      const yBase = nPos*(CARD_H+GAP); // baseline position (px)
 
-      const colPos = {};
+      // Positivos: ficam ACIMA da linha do zero.
+      // Queremos o melhor (maior retorno) mais "alto" => y mais negativo.
       pos.forEach((x, idx)=>{
-        colPos[x.id] = { top: idx*(CARD_H+GAP) };
+        // idx=0 (melhor) => y=-nPos; idx=nPos-1 (pior positivo) => y=-1
+        colY[x.id] = idx - nPos;
       });
+
+      // Negativos: ficam ABAIXO da linha do zero.
+      // Mais perto do zero vem primeiro (logo abaixo da linha).
       neg.forEach((x, idx)=>{
-        colPos[x.id] = { top: yBase + GAP + idx*(CARD_H+GAP) };
+        colY[x.id] = idx + 1; // 1..nNeg
       });
 
-      // Missing values: push to bottom after neg
-      const missing = ordered.filter(x => !Number.isFinite(x.v)).map(x=>x.id);
-      const startMissing = yBase + GAP + neg.length*(CARD_H+GAP) + GAP;
+      // Missing: depois de tudo
       missing.forEach((id, idx)=>{
-        colPos[id] = { top: startMissing + idx*(CARD_H+GAP) };
+        colY[id] = (neg.length + 1) + idx;
       });
 
-      positions[col.id] = colPos;
-      baselines[col.id] = yBase - GAP/2;
+      yMaps[col.id] = colY;
 
-      const colHeight = startMissing + missing.length*(CARD_H+GAP) - GAP;
-      maxHeight = Math.max(maxHeight, colHeight);
+      for (const id in colY){
+        const y = colY[id];
+        globalMinY = Math.min(globalMinY, y);
+        globalMaxY = Math.max(globalMaxY, y);
+      }
     }
-    return { positions, baselines, height: maxHeight };
+
+    if (globalMinY === Infinity){
+      globalMinY = 0;
+      globalMaxY = 0;
+    }
+
+    const height = (globalMaxY - globalMinY + 1)*(CARD_H+GAP) - GAP;
+    const baselineY = (0 - globalMinY)*(CARD_H+GAP) - GAP/2;
+
+    for (const col of colDefs){
+      const colPos = {};
+      const colY = yMaps[col.id] || {};
+      for (const a of assets){
+        const y = colY[a.id];
+        if (y === undefined) continue;
+        colPos[a.id] = { top: (y - globalMinY)*(CARD_H+GAP) };
+      }
+      positions[col.id] = colPos;
+      baselines[col.id] = baselineY;
+    }
+
+    return { positions, baselines, height };
   }
+
 
   if (displayMode === "asset"){
     // Compute relative rank to reference asset, using GLOBAL min/max across columns
@@ -456,14 +499,23 @@ function computePositions(dataset, displayMode, referenceAssetId){
 }
 
 // Color scale for Return highlight (diverging red -> yellow -> green)
+// Return highlight (red -> yellow -> green), sempre "menor -> maior" (por coluna)
 function valueToColor(v, scale){
-  if (!Number.isFinite(v)) return "#e2e8f0";
-  const maxAbs = scale.maxAbs || 0.0001;
-  const t = Math.max(0, Math.min(1, (v + maxAbs) / (2*maxAbs)));
+  if (!Number.isFinite(v) || !scale || !Number.isFinite(scale.min) || !Number.isFinite(scale.max)){
+    return "#e2e8f0";
+  }
 
-  const c1 = [200, 29, 37];   // red-ish
-  const c2 = [241, 196, 83];  // yellow-ish
-  const c3 = [42, 157, 143];  // green-ish
+  const min = scale.min;
+  const max = scale.max;
+  const span = (max - min);
+
+  // 0 = menor, 1 = maior
+  let t = (span === 0) ? 0.5 : (v - min) / span;
+  t = Math.max(0, Math.min(1, t));
+
+  const c1 = [200, 29, 37];    // red-ish (menor)
+  const c2 = [241, 196, 83];   // yellow-ish (meio)
+  const c3 = [42, 157, 143];   // green-ish (maior)
 
   function lerp(a,b,t){ return a + (b-a)*t; }
   function mix(a,b,t){
@@ -499,22 +551,25 @@ function pickColorForClass(cls){
 function computeReturnScale(dataset){
   const { assets, colDefs } = dataset;
 
-  // Only use return-ish columns for scale (years + annualised_total + annualised_excess)
-  const scaleCols = colDefs
-    .filter(c => c.kind === "return" || c.id === "annualised_total" || c.id === "annualised_excess");
+  // Escala POR COLUNA (cada ano/coluna tem seu próprio degrade)
+  const scales = {};
 
-  let min = Infinity;
-  let max = -Infinity;
-  for (const a of assets){
-    for (const c of scaleCols){
-      const v = a.values[c.id];
+  for (const col of colDefs){
+    let min = Infinity;
+    let max = -Infinity;
+    for (const a of assets){
+      const v = a.values[col.id];
       if (!Number.isFinite(v)) continue;
       min = Math.min(min, v);
       max = Math.max(max, v);
     }
+    if (min === Infinity){
+      scales[col.id] = { min: NaN, max: NaN };
+    } else {
+      scales[col.id] = { min, max };
+    }
   }
-  const maxAbs = Math.max(Math.abs(min), Math.abs(max));
-  return { min, max, maxAbs };
+  return scales;
 }
 
 function renderLegend(dataset){
@@ -582,10 +637,11 @@ function renderChart(dataset){
     ui.refAssetSelect.appendChild(opt);
   });
 
-  if (!state.referenceAssetId){
+  const hasRef = !!state.referenceAssetId && dataset.assets.some(a => a.id === state.referenceAssetId);
+  if (!hasRef){
     state.referenceAssetId = dataset.assets[0]?.id ?? null;
-    ui.refAssetSelect.value = state.referenceAssetId ?? "";
   }
+  ui.refAssetSelect.value = state.referenceAssetId ?? "";
 
   renderLegend(dataset);
 
@@ -644,8 +700,8 @@ function renderChart(dataset){
         const cls = a.class || "Sem classe";
         bg = classColorMap.get(cls) || a.class_color || a.asset_color || "#e2e8f0";
       } else {
-        bg = valueToColor(v, retScale);
-      }
+        bg = valueToColor(v, retScale[col.id]);
+}
       card.style.background = bg;
 
       // Text
