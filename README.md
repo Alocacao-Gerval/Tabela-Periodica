@@ -4,7 +4,7 @@ Este projeto é um **MVP gratuito** de um Return Map no estilo BlackRock, mas le
 
 ## O que ele já faz
 - 3 modos de display: **Stacked**, **Relative to zero**, **Relative to asset**
-- 2 modos de highlight: **Asset class** e **Return**
+- 3 modos de highlight: **Classe**, **Ativo** e **Retorno**
 - Hover: destaca o mesmo ativo em todas as colunas + tooltip com métricas
 - Colunas:
   - retornos por ano (detectados automaticamente no CSV)
