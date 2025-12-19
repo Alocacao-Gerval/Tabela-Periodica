@@ -229,3 +229,131 @@ body {
   .column{ min-width: 132px; }
   .gradient-bar{ width: 160px; }
 }
+
+/* =========================
+   RM – Control Panel (tweaks)
+   Cole no FINAL do styles.css
+   ========================= */
+:root{
+  --rm-font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  --rm-title-size: 22px;
+  --rm-subtitle-size: 12px;
+
+  /* Cards (ajuste aqui) */
+  --rm-card-w: 108px;     /* <= diminui para caber 1920px */
+  --rm-card-h: 44px;      /* importante: o JS vai ler isso */
+  --rm-card-radius: 10px;
+  --rm-card-pad-x: 10px;
+  --rm-card-pad-y: 7px;
+
+  /* Espaçamentos */
+  --rm-col-gap: 10px;
+  --rm-row-gap: 8px;      /* importante: o JS vai ler isso */
+
+  /* Linha de referência (Relative to zero/asset) */
+  --rm-baseline-h: 4px;
+
+  /* Transições */
+  --rm-trans: 180ms cubic-bezier(.2,.8,.2,1);
+}
+
+/* Fonte geral mais clean */
+body{
+  font-family: var(--rm-font);
+}
+
+/* Cabeçalho mais “clean” */
+header{
+  position: relative; /* necessário pro logo absoluto */
+}
+header h1{
+  font-size: var(--rm-title-size);
+  letter-spacing: -0.02em;
+  font-weight: 750;
+  margin-bottom: 4px;
+}
+#subtitle{
+  font-size: var(--rm-subtitle-size);
+  color: #475569;
+}
+
+/* Logo no canto superior direito */
+.brand-logo{
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+  opacity: .95;
+}
+
+/* Menos espaço horizontal (pra caber tudo na tela) */
+#chart{
+  column-gap: var(--rm-col-gap);
+}
+
+/* Cards menores + valor embaixo do nome (igual BlackRock) */
+.card{
+  width: var(--rm-card-w);
+  height: var(--rm-card-h);
+  box-sizing: border-box;
+  padding: var(--rm-card-pad-y) var(--rm-card-pad-x);
+  border-radius: var(--rm-card-radius);
+
+  display: flex;
+  flex-direction: column;     /* <<< nome em cima, valor embaixo */
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+
+  box-shadow: 0 1px 0 rgba(0,0,0,.05);
+  transition: filter var(--rm-trans), box-shadow var(--rm-trans);
+}
+
+/* cuidado: NÃO usar transform no hover (transform já é usado pra posicionar os cards) */
+.card:hover{
+  filter: brightness(.985) saturate(1.03);
+  box-shadow: 0 8px 18px rgba(0,0,0,.08);
+}
+
+.card .name{
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.05;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card .val{
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+  opacity: .95;
+}
+
+/* Linha mais evidente no Relative to zero / Relative to asset */
+.baseline{
+  height: var(--rm-baseline-h);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, .35);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.35),
+    0 2px 10px rgba(0,0,0,.08);
+}
+
+/* Suaviza “troca de display” sem mexer no transform do card */
+.card{
+  animation: rmFadeIn 160ms ease-out;
+}
+@keyframes rmFadeIn{
+  from{ opacity: 0; }
+  to{ opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .card{ animation: none !important; transition: none !important; }
+}
