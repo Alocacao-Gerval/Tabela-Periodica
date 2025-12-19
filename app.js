@@ -147,47 +147,51 @@ async function fetchText(url){
 
 // Identify columns from Quantum CSV
 function extractColumns(quantumHeader){
-  // Returns columns: yearly returns + one partial-period return (if present)
   const returnCols = [];
   let annualisedCol = null;
   let volCol = null;
   let maxDDCol = null;
 
+  const norm = (s) =>
+    String(s || "")
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")   // remove acentos
+      .replace(/\uFFFD/g, "");          // remove o "�" (replacement char)
+
   for (const h of quantumHeader){
     const hs = String(h).trim();
+    const hn = norm(hs);
 
-    // Return columns
-    if (/^Retorno\s+-\s+diária\s+\(/i.test(hs)){
-      // Try a clean year: (2016)
+    // Retorno (anos / períodos)
+    // Aceita: "Retorno - diaria (...)" e também o caso quebrado "di�ria"
+    if (/^retorno\s*-\s*di.?ria\s*\(/.test(hn)){
+      // (2016)
       const mYear = hs.match(/\((\d{4})\)/);
       if (mYear){
         returnCols.push({ id: mYear[1], label: mYear[1], source: hs, kind: "return" });
         continue;
       }
-      // Otherwise: (02/06/2015 até 31/12/2015)
-      const mRange = hs.match(/\((\d{2}\/\d{2}\/\d{4})\s+até\s+(\d{2}\/\d{2}\/\d{4})\)/i);
+
+      // (02/06/2015 até 31/12/2015) — aqui não depende da palavra "até"
+      const mRange = hs.match(/\((\d{2}\/\d{2}\/\d{4}).*?(\d{2}\/\d{2}\/\d{4})\)/);
       if (mRange){
         const start = mRange[1];
         const end = mRange[2];
         const endYear = end.slice(-4);
-        // Heurística: se não começa em 01/01, marca com *
         const star = start.startsWith("01/01") ? "" : "*";
-        returnCols.push({ id: `${endYear}${star}`, label: `${endYear}${star}`, source: hs, kind: "return", meta: { start, end } });
+        returnCols.push({ id: `${endYear}${star}`, label: `${endYear}${star}`, source: hs, kind: "return" });
         continue;
       }
+      continue;
     }
 
-    if (/^Retorno\s+Anualizado\s+-\s+diária\s+\(/i.test(hs)){
-      annualisedCol = hs;
-      continue;
-    }
-    if (/^Volatilidade\s+-\s+diária\s+\(/i.test(hs)){
-      volCol = hs;
-      continue;
-    }
-    if (/^Máximo\s+Drawdown\s+-\s+diária\s+\(/i.test(hs)){
+    // Anualizado / Vol / Max DD (mesma lógica, sem depender do acento)
+    if (!annualisedCol && hn.startsWith("anualizado")) annualisedCol = hs;
+    if (!volCol && hn.startsWith("volatilidade")) volCol = hs;
+    if (!maxDDCol && (hn.includes("drawdown") || hn.includes("maximo drawdown") || hn.includes("maximo") && hn.includes("drawdown"))) {
       maxDDCol = hs;
-      continue;
     }
   }
 
@@ -206,13 +210,7 @@ function extractColumns(quantumHeader){
     { id: "max_dd", label: "Máx DD", kind: "metric", sort: "desc" },
   ];
 
-  return {
-    returnCols,
-    metricCols,
-    annualisedCol,
-    volCol,
-    maxDDCol,
-  };
+  return { returnCols, metricCols, annualisedCol, volCol, maxDDCol };
 }
 
 // Prepare merged dataset (Quantum + Registry) and computed metrics (RF+, Sharpe)
