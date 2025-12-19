@@ -130,7 +130,7 @@ body {
   font-size: 18px;
   font-weight: 700;
   color: #0f172a;
-  text-align: center;
+  text-align: left;
   margin-bottom: 8px;
 }
 .col-body{
@@ -154,15 +154,15 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  height: 44px;
+  height: 38px;
   border-radius: 10px;
-  padding: 7px 8px;
+  padding: 4px 6px;
   border: 1px solid rgba(0,0,0,0.10);
   box-shadow: 0 1px 0 rgba(0,0,0,0.02);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 5px;
   cursor: default;
   user-select: none;
   transition: transform 250ms ease, filter 180ms ease, box-shadow 180ms ease;
