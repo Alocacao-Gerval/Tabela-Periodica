@@ -6,12 +6,16 @@ const DATASETS = {
     folder: "data/br",
     riskFreeQuantumName: "CDI",
     currency: "BRL",
+    naMetricsAssets: ["CDI", "IPCA"],
+    naMetricsCols: ["vol", "sharpe", "max_dd"],
   },
   ex: {
     label: "Exterior",
     folder: "data/ex",
     riskFreeQuantumName: "SOFR",
     currency: "USD",
+    naMetricsAssets: ["SOFR", "CPI"],
+    naMetricsCols: ["vol", "sharpe", "max_dd"],
   },
 };
 
@@ -321,6 +325,19 @@ function prepareDataset(quantumRows, registryRows, datasetConfig, columns){
 
     a.values.annualised_excess = excess;
     a.values.sharpe = sharpe;
+    // --- Força "traço" e joga pro fim em Vol/Sharpe/Max DD para RF + inflação ---
+    const nameKey = normalize(a.quantum_name ?? a.display ?? a.id);
+
+    // Brasil: CDI e IPCA | Exterior: SOFR e CPI
+    const skipSet = (datasetConfig.label === "Brasil")
+      ? new Set(["cdi", "ipca"])
+      : new Set(["sofr", "cpi"]);
+
+    if (skipSet.has(nameKey)) {
+      a.values.vol = null;
+      a.values.sharpe = null;
+      a.values.max_dd = null;
+    }
   }
 
   // Subtitle: derive period from annualised header
@@ -522,6 +539,8 @@ if (displayMode === "zero"){
       positions[col.id] = colPos;
       baselines[col.id] = baselineY;
     }
+
+    
 
     return { positions, baselines, height };
   }
