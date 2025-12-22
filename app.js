@@ -838,6 +838,9 @@ function renderChart(dataset){
       const v = a.values[col.id];
       const card = document.createElement("div");
       card.className = "card";
+      if (state.displayMode === "asset" && a.id === state.referenceAssetId){
+      card.classList.add("is-ref");
+      }
       card.dataset.assetId = a.id;
       card.dataset.colId = col.id;
       if (state.displayMode === "asset" && a.id === state.referenceAssetId) {
