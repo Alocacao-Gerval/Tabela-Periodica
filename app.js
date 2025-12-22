@@ -667,48 +667,32 @@ function computeReturnScale(dataset){
       max = Math.max(max, v);
     }
 
-    if (min === Infinity){
-      // Bandas: faz a cor “chegar nas pontas” mais rápido (menos amarelo)
-      // Interpretação: a cada bandStep (ex: 2 p.p.) muda um degrau de cor.
-      // bandCap define em quanto (ex: 30 p.p.) a gente já “satura” em verde/vermelho.
-      let bandStep = NaN;
-      let bandCap  = NaN;
-
-      // Retornos por ano: +/- 30 p.p. em torno do CDI/SOFR já satura
-      if (col.kind === "return") { bandStep = 0.02; bandCap = 0.30; }
-
-      // Métricas anualizadas: diferenças tendem a ser menores, então cap menor (fica mais informativo)
-      if (col.id === "annualised_total")  { bandStep = 0.02; bandCap = 0.10; }
-      if (col.id === "annualised_excess") { bandStep = 0.02; bandCap = 0.10; }
-
-      // Sharpe: degraus de 0.10 e satura em +/-0.50 (ajustável)
-      if (col.id === "sharpe") { bandStep = 0.10; bandCap = 0.50; }
-
-      // Vol: degraus de 2 p.p. e cap de 20 p.p. (reverse=true já está aplicado)
-      if (col.id === "vol") { bandStep = 0.02; bandCap = 0.20; }
-
-      // Máx DD: degraus de 5 p.p. e cap de 30 p.p. (ajustável)
-      if (col.id === "max_dd") { bandStep = 0.05; bandCap = 0.30; }
-
-      scales[col.id] = { min, max, pivot, reverse, bandStep, bandCap };
+       if (min === Infinity){
+      scales[col.id] = { min: NaN, max: NaN, pivot: NaN, reverse: false };
       continue;
     }
 
-    // Pivot default: RF na mesma coluna (se existir)
     let pivot = rfAsset ? rfAsset.values[col.id] : NaN;
-
-    // Colunas que já são "excesso" em relação ao RF
     if (col.id === "annualised_excess") pivot = 0;
-    // Sharpe neutro em 0
     if (col.id === "sharpe") pivot = 0;
 
-    // Volatilidade: menor é melhor
     const reverse = (col.id === "vol");
-
-    // Se pivot não existir, cai para o meio do range
     if (!Number.isFinite(pivot)) pivot = (min + max) / 2;
 
-    scales[col.id] = { min, max, pivot, reverse };
+    // ======= AQUI ENTRA O TEU BLOCO DAS BANDAS =======
+    let bandStep = NaN;
+    let bandCap  = NaN;
+
+    const isYearCol = /^\d{4}\*?$/.test(col.id);
+    if (isYearCol) { bandStep = 0.02; bandCap = 0.30; }
+
+    if (col.id === "annualised_total")  { bandStep = 0.02; bandCap = 0.10; }
+    if (col.id === "annualised_excess") { bandStep = 0.02; bandCap = 0.10; }
+    if (col.id === "sharpe")            { bandStep = 0.10; bandCap = 0.50; }
+    if (col.id === "vol")               { bandStep = 0.02; bandCap = 0.20; }
+    if (col.id === "max_dd")            { bandStep = 0.05; bandCap = 0.30; }
+
+    scales[col.id] = { min, max, pivot, reverse, bandStep, bandCap };
   }
 
   return scales;
