@@ -637,30 +637,14 @@ function pickColorForClass(cls){
 function computeReturnScale(dataset){
   const { assets, colDefs, rfAssetId } = dataset;
 
-  // Escala POR COLUNA (cada ano/coluna tem seu próprio degrade)
-  // Pivot (neutro): RF da coluna (CDI no BR / SOFR no EX)
   const scales = {};
-
   const rfAsset = rfAssetId ? assets.find(a => a.id === rfAssetId) : null;
 
   for (const col of colDefs){
-    // Bandas (opcional): se existir bandStep/bandCap, valueToColor entra no modo "banded"
-    let bandStep = NaN;
-    let bandCap  = NaN;
-
-    // Retornos por ano (col.kind vem como "return" no extractColumns):contentReference[oaicite:5]{index=5}
-    if (col.kind === "return") { bandStep = 0.02; bandCap = 0.30; } // 2 p.p. / satura em 30 p.p.
-
-    // Métricas (ajuste fino, se quiser)
-    if (col.id === "annualised_total"  || col.id === "annualised_excess") { bandStep = 0.02; bandCap = 0.10; }
-    if (col.id === "sharpe")  { bandStep = 0.10; bandCap = 0.50; }
-    if (col.id === "vol")     { bandStep = 0.02; bandCap = 0.20; }
-    if (col.id === "max_dd")  { bandStep = 0.05; bandCap = 0.30; }
-
-    // agora SIM o scale carrega as bandas
-    scales[col.id] = { min, max, pivot, reverse, bandStep, bandCap };
+    // 1) min/max reais da coluna
     let min = Infinity;
     let max = -Infinity;
+
     for (const a of assets){
       const v = a.values[col.id];
       if (!Number.isFinite(v)) continue;
@@ -673,21 +657,35 @@ function computeReturnScale(dataset){
       continue;
     }
 
-    // Pivot default: RF na mesma coluna (se existir)
+    // 2) pivot (RF ou neutros especiais)
     let pivot = rfAsset ? rfAsset.values[col.id] : NaN;
 
-    // Colunas que já são "excesso" em relação ao RF
     if (col.id === "annualised_excess") pivot = 0;
-    // Sharpe neutro em 0
     if (col.id === "sharpe") pivot = 0;
 
-    // Volatilidade: menor é melhor
-    const reverse = (col.id === "vol");
-
-    // Se pivot não existir, cai para o meio do range
     if (!Number.isFinite(pivot)) pivot = (min + max) / 2;
 
-    scales[col.id] = { min, max, pivot, reverse };
+    // 3) reverse (menor é melhor)
+    const reverse = (col.id === "vol");
+
+    // 4) bandas (defaults)
+    let bandStep = NaN;
+    let bandCap  = NaN;
+
+    // retornos por coluna-ano (col.kind existe: "return" / "metric")
+    if (col.kind === "return"){
+      bandStep = 0.02; // 2 p.p.
+      bandCap  = 0.30; // satura em 30 p.p. vs pivot
+    }
+
+    // métricas
+    if (col.id === "annualised_total"){  bandStep = 0.02; bandCap = 0.10; }
+    if (col.id === "annualised_excess"){ bandStep = 0.02; bandCap = 0.10; }
+    if (col.id === "sharpe"){           bandStep = 0.10; bandCap = 0.50; }
+    if (col.id === "vol"){              bandStep = 0.02; bandCap = 0.20; } // reverse já cuida do sentido
+    if (col.id === "max_dd"){           bandStep = 0.05; bandCap = 0.30; }
+
+    scales[col.id] = { min, max, pivot, reverse, bandStep, bandCap };
   }
 
   return scales;
