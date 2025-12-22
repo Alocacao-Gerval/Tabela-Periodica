@@ -772,7 +772,7 @@ function renderChart(dataset){
 
   // Compute return color scale once
   const retScale = computeReturnScale(dataset);
-  window.scales = returnScales;
+  window.scales = retScale;
   // Build columns
   const cardsByAssetId = new Map(); // for hover highlight across columns
 
