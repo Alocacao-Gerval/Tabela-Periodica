@@ -361,3 +361,90 @@ header h1{
 @media (prefers-reduced-motion: reduce){
   .card{ animation: none !important; transition: none !important; }
 }
+
+/* =========================
+   RM – Ajustes visuais (override)
+   Cole no FINAL do styles.css
+   ========================= */
+:root{
+  --rm-font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans";
+  --rm-title-size: 22px;
+
+  /* Cards: ajuste aqui até caber 1920x1080 sem scroll horizontal */
+  --rm-card-w: 104px;
+  --rm-card-h: 44px;
+  --rm-col-gap: 8px;
+
+  /* Transições */
+  --rm-trans: 220ms cubic-bezier(.2,.8,.2,1);
+
+  /* Linha de referência mais óbvia */
+  --rm-baseline-h: 5px;
+}
+
+/* Tipografia geral */
+body{ font-family: var(--rm-font); }
+
+/* Header mais clean */
+header{ position: relative; }
+header h1{
+  font-size: var(--rm-title-size);
+  letter-spacing: -0.02em;
+  font-weight: 750;
+}
+
+/* Espaçamento entre colunas */
+#chart{ column-gap: var(--rm-col-gap); }
+
+/* Cards: valor embaixo do nome (estilo BlackRock) */
+.card, .tile{
+  width: var(--rm-card-w);
+  height: var(--rm-card-h);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+
+  transition:
+    transform var(--rm-trans),
+    background-color var(--rm-trans),
+    filter var(--rm-trans),
+    box-shadow var(--rm-trans);
+}
+
+/* Evita “brigar” com o transform de posicionamento */
+.card:hover, .tile:hover{
+  filter: brightness(.985) saturate(1.03);
+  box-shadow: 0 10px 18px rgba(0,0,0,.08);
+}
+
+/* Nome/valor */
+.card .name, .tile .name{
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.05;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.card .val, .tile .val, .tile .value{
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+  opacity: .95;
+}
+
+/* Linha de referência mais visível */
+.baseline{
+  height: var(--rm-baseline-h);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, .38);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.35),
+    0 2px 10px rgba(0,0,0,.10);
+}
