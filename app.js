@@ -644,6 +644,21 @@ function computeReturnScale(dataset){
   const rfAsset = rfAssetId ? assets.find(a => a.id === rfAssetId) : null;
 
   for (const col of colDefs){
+    // Bandas (opcional): se existir bandStep/bandCap, valueToColor entra no modo "banded"
+    let bandStep = NaN;
+    let bandCap  = NaN;
+
+    // Retornos por ano (col.kind vem como "return" no extractColumns):contentReference[oaicite:5]{index=5}
+    if (col.kind === "return") { bandStep = 0.02; bandCap = 0.30; } // 2 p.p. / satura em 30 p.p.
+
+    // Métricas (ajuste fino, se quiser)
+    if (col.id === "annualised_total"  || col.id === "annualised_excess") { bandStep = 0.02; bandCap = 0.10; }
+    if (col.id === "sharpe")  { bandStep = 0.10; bandCap = 0.50; }
+    if (col.id === "vol")     { bandStep = 0.02; bandCap = 0.20; }
+    if (col.id === "max_dd")  { bandStep = 0.05; bandCap = 0.30; }
+
+    // agora SIM o scale carrega as bandas
+    scales[col.id] = { min, max, pivot, reverse, bandStep, bandCap };
     let min = Infinity;
     let max = -Infinity;
     for (const a of assets){
