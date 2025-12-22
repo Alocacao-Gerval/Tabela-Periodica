@@ -674,13 +674,15 @@ function computeReturnScale(dataset){
 
     // retornos por coluna-ano (col.kind existe: "return" / "metric")
     if (col.kind === "return"){
-      bandStep = 0.02; // 2 p.p.
-      bandCap  = 0.30; // satura em 30 p.p. vs pivot
+      bandStep = 0.00; // 2 p.p.
+      bandCap  = 0.15; // satura em 30 p.p. vs pivot
+      // diminuir bandCap (satura mais rápido) ou
+      // diminuir bandStep (mais degraus, transição mais rápida).
     }
 
     // métricas
     if (col.id === "annualised_total"){  bandStep = 0.02; bandCap = 0.10; }
-    if (col.id === "annualised_excess"){ bandStep = 0.02; bandCap = 0.10; }
+    if (col.id === "annualised_excess"){ bandStep = 0.00; bandCap = 0.05; }
     if (col.id === "sharpe"){           bandStep = 0.10; bandCap = 0.50; }
     if (col.id === "vol"){              bandStep = 0.02; bandCap = 0.20; } // reverse já cuida do sentido
     if (col.id === "max_dd"){           bandStep = 0.05; bandCap = 0.30; }
