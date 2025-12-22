@@ -580,10 +580,45 @@ function valueToColor(v, scale){
   // Garante pivot dentro do range
   pivot = Math.max(min, Math.min(max, pivot));
 
-  // Caso degenerado
-  if (max === min){
-    return `rgb(${c2[0]},${c2[1]},${c2[2]})`;
+  // =====================
+// NOVO: Modo "bandas" (ancorado no pivot)
+// =====================
+const bandStep = scale.bandStep;
+const bandCap  = scale.bandCap;
+const banded = Number.isFinite(bandStep) && bandStep > 0 && Number.isFinite(bandCap) && bandCap > 0;
+
+if (banded){
+  // cap efetivo por lado (não deixa “passar” do range disponível)
+  const capBelow = Math.min(bandCap, Math.max(0, pivot - min));
+  const capAbove = Math.min(bandCap, Math.max(0, max - pivot));
+
+  // helper: quantiza em degraus de bandStep
+  function quant(d, cap){
+    if (cap <= 0) return 0;
+    const d2 = Math.max(0, Math.min(cap, d));
+    // degraus “de verdade”: 0, step, 2*step, ...
+    let q = Math.floor(d2 / bandStep) * bandStep;
+    // garante saturação na ponta
+    if (d2 >= cap - 1e-12) q = cap;
+    return Math.max(0, Math.min(cap, q));
   }
+
+  if (v <= pivot){
+    const denom = capBelow || 1;
+    const d = pivot - v;
+    const q = quant(d, denom);
+    const t = clamp01(q / denom);       // 0 = pivot (amarelo) | 1 = ponta (vermelho)
+    const rgb = mix(c2, c1, t);         // amarelo -> vermelho
+    return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+  } else {
+    const denom = capAbove || 1;
+    const d = v - pivot;
+    const q = quant(d, denom);
+    const t = clamp01(q / denom);       // 0 = pivot (amarelo) | 1 = ponta (verde)
+    const rgb = mix(c2, c3, t);         // amarelo -> verde
+    return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+  }
+}
 
   // Segmento 1: min -> pivot (vermelho -> amarelo)
   if (v <= pivot){
