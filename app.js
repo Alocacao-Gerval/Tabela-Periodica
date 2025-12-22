@@ -574,6 +574,38 @@ function valueToColor(v, scale){
     return `rgb(${c2[0]},${c2[1]},${c2[2]})`;
   }
 
+  // ===== MODO "BANDAS" (quantiza em degraus a partir do pivot) =====
+  // Espera scale.bandStep e scale.bandCap (em unidades do teu v: ex. 0.02 = 2 p.p.)
+  const bandStep = scale.bandStep;
+  const bandCap  = scale.bandCap;
+  const banded =
+    Number.isFinite(bandStep) && bandStep > 0 &&
+    Number.isFinite(bandCap)  && bandCap > 0;
+
+  if (banded) {
+    // distância até a "ponta" de cada lado, respeitando range real e o cap configurado
+    const capBelow = Math.min(bandCap, Math.max(0, pivot - min));
+    const capAbove = Math.min(bandCap, Math.max(0, max - pivot));
+
+    // helper: transforma uma diferença em "degraus" (0..1)
+    function quantize(diff, cap) {
+      if (cap <= 0) return 0;
+      const d = Math.max(0, Math.min(cap, diff));
+      const q = Math.floor(d / bandStep) * bandStep; // degraus: 0, step, 2*step...
+      return Math.max(0, Math.min(1, q / cap));
+    }
+
+    if (v <= pivot) {
+      const t = quantize(pivot - v, capBelow); // 0 = pivot (amarelo), 1 = vermelho
+      const rgb = mix(c2, c1, t);
+      return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+    } else {
+      const t = quantize(v - pivot, capAbove); // 0 = pivot (amarelo), 1 = verde
+      const rgb = mix(c2, c3, t);
+      return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+    }
+  }
+  
   // Segmento 1: min -> pivot (vermelho -> amarelo)
   if (v <= pivot){
     const denom = (pivot - min);
