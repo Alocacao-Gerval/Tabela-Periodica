@@ -2,459 +2,363 @@
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 body {
-  margin: 0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
-  color: #0f172a;
-  background: #ffffff;
+margin: 0;
+font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+color: #0f172a;
+background: #ffffff;
 }
 
 /* Topbar */
 .topbar{
-  padding: 16px 18px 10px 18px;
-  border-bottom: 1px solid #e2e8f0;
-  position: sticky;
-  top: 0;
-  background: #fff;
-  z-index: 10;
+padding: 16px 18px 10px 18px;
+border-bottom: 1px solid #e2e8f0;
+position: sticky;
+top: 0;
+background: #fff;
+z-index: 10;
 }
 
 .title-block h1{
-  font-size: 18px;
-  margin: 0;
-  letter-spacing: 0.2px;
+font-size: 18px;
+margin: 0;
+letter-spacing: 0.2px;
 }
 .subtitle{
-  margin-top: 4px;
-  font-size: 12px;
-  color: #475569;
+margin-top: 4px;
+font-size: 12px;
+color: #475569;
 }
 
 /* Controls */
 .controls{ margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
 .control-row{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: flex-end;
+display: flex;
+flex-wrap: wrap;
+gap: 14px;
+align-items: flex-end;
 }
 .control-group{ display: flex; flex-direction: column; gap: 6px; }
 .control-label{ font-size: 12px; color: #475569; }
 
 .segmented{
-  display: inline-flex;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #f8fafc;
+display: inline-flex;
+border: 1px solid #cbd5e1;
+border-radius: 10px;
+overflow: hidden;
+background: #f8fafc;
 }
 .segmented-btn{
-  border: 0;
-  padding: 8px 10px;
-  background: transparent;
-  font-size: 12px;
-  color: #0f172a;
-  cursor: pointer;
-  white-space: nowrap;
+border: 0;
+padding: 8px 10px;
+background: transparent;
+font-size: 12px;
+color: #0f172a;
+cursor: pointer;
+white-space: nowrap;
 }
 .segmented-btn:hover{ background: #eef2ff; }
 .segmented-btn.is-active{
-  background: #0f172a;
-  color: #fff;
+background: #0f172a;
+color: #fff;
 }
 
 .ref-asset select{
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
-  padding: 8px 10px;
-  font-size: 12px;
-  background: #fff;
+border: 1px solid #cbd5e1;
+border-radius: 10px;
+padding: 8px 10px;
+font-size: 12px;
+background: #fff;
 }
 
 .legend-row{
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
+display: flex;
+gap: 10px;
+align-items: center;
+flex-wrap: wrap;
 }
 .legend-chip{
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  font-size: 12px;
-  color: #334155;
+display: inline-flex;
+gap: 8px;
+align-items: center;
+font-size: 12px;
+color: #334155;
 }
 .legend-swatch{
-  width: 14px;
-  height: 14px;
-  border-radius: 4px;
-  border: 1px solid rgba(0,0,0,0.08);
+width: 14px;
+height: 14px;
+border-radius: 4px;
+border: 1px solid rgba(0,0,0,0.08);
 }
 .legend-gradient{
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: #334155;
+display: flex;
+align-items: center;
+gap: 8px;
+font-size: 12px;
+color: #334155;
 }
 .gradient-bar{
-  width: 220px;
-  height: 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(0,0,0,0.10);
-  background: linear-gradient(90deg, #c81d25, #f1c453, #2a9d8f);
+width: 220px;
+height: 12px;
+border-radius: 999px;
+border: 1px solid rgba(0,0,0,0.10);
+background: linear-gradient(90deg, #c81d25, #f1c453, #2a9d8f);
 }
 
 /* Main */
 .main{ padding: 16px 18px 28px; }
 
 .chart-wrap{
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 14px;
-  background: #fff;
+border: 1px solid #e2e8f0;
+border-radius: 14px;
+padding: 14px;
+background: #fff;
 }
 
 .chart{
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding-bottom: 8px;
+display: flex;
+gap: 10px;
+overflow-x: auto;
+padding-bottom: 8px;
 }
 
 /* Column */
 .column{
-  min-width: 140px;
-  flex: 0 0 auto;
+min-width: 140px;
+flex: 0 0 auto;
 }
 .col-header{
-  font-size: 18px;
-  font-weight: 700;
-  color: #0f172a;
-  text-align: left;
-  margin-bottom: 8px;
+font-size: 18px;
+font-weight: 700;
+color: #0f172a;
+text-align: left;
+margin-bottom: 8px;
 }
 .col-body{
-  position: relative;
-  border-radius: 12px;
-  background: #ffffff;
+position: relative;
+border-radius: 12px;
+background: #ffffff;
 }
 
 /* Baseline for relative modes */
 .baseline{
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: #cbd5e1;
-  opacity: 0.85;
+position: absolute;
+left: 0;
+right: 0;
+height: 1px;
+background: #cbd5e1;
+opacity: 0.85;
 }
 
 /* Card */
 .card{
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 38px;
-  border-radius: 10px;
+position: absolute;
+left: 0;
+right: 0;
+height: 38px;
+border-radius: 10px;
+  padding: 4px 6px;
   padding: 4px 4px;
-  border: 1px solid rgba(0,0,0,0.10);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 5px;
-  cursor: default;
-  user-select: none;
-  transition: transform 250ms ease, filter 180ms ease, box-shadow 180ms ease;
-  color: #0b1220;
+border: 1px solid rgba(0,0,0,0.10);
+box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 5px;
+cursor: default;
+user-select: none;
+transition: transform 250ms ease, filter 180ms ease, box-shadow 180ms ease;
+color: #0b1220;
 }
 .card .name{
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+font-size: 12px;
+font-weight: 700;
+line-height: 1.1;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
 }
 .card .val{
-  font-size: 12px;
-  font-weight: 700;
-  opacity: 0.95;
+font-size: 12px;
+font-weight: 700;
+opacity: 0.95;
 }
 
 /* Hover highlight across columns */
 .card.is-hovered{
-  outline: 2px solid rgba(15, 23, 42, 0.55);
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
-  filter: saturate(1.02) contrast(1.02);
-  z-index: 3;
+outline: 2px solid rgba(15, 23, 42, 0.55);
+box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+filter: saturate(1.02) contrast(1.02);
+z-index: 3;
 }
 .card.is-dimmed{
-  filter: saturate(0.80) opacity(0.62);
+filter: saturate(0.80) opacity(0.62);
 }
 .card.is-ref{
-  outline: 3px solid rgba(15,23,42,.55);
-  outline-offset: 1px;
+outline: 3px solid rgba(15,23,42,.55);
+outline-offset: 1px;
 }
 
 /* Tooltip */
 .tooltip{
-  position: fixed;
-  pointer-events: none;
-  z-index: 999;
-  background: rgba(15, 23, 42, 0.96);
-  color: #fff;
-  padding: 10px 10px;
-  border-radius: 10px;
-  font-size: 12px;
-  max-width: 280px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+position: fixed;
+pointer-events: none;
+z-index: 999;
+background: rgba(15, 23, 42, 0.96);
+color: #fff;
+padding: 10px 10px;
+border-radius: 10px;
+font-size: 12px;
+max-width: 280px;
+box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
 .tooltip .t-title{
-  font-weight: 800;
-  margin-bottom: 6px;
+font-weight: 800;
+margin-bottom: 6px;
 }
 .tooltip .t-row{
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 2px;
-  opacity: 0.95;
+display: flex;
+justify-content: space-between;
+gap: 10px;
+margin-top: 2px;
+opacity: 0.95;
 }
 .tooltip .t-row span:first-child{ opacity: 0.78; }
 .footnote{
-  margin-top: 10px;
-  font-size: 12px;
-  color: #334155;
+margin-top: 10px;
+font-size: 12px;
+color: #334155;
 }
 .footnote .muted{ margin-top: 4px; color: #64748b; }
 
 @media (max-width: 760px){
-  .column{ min-width: 132px; }
-  .gradient-bar{ width: 160px; }
+.column{ min-width: 132px; }
+.gradient-bar{ width: 160px; }
 }
 
 /* =========================
-   RM – Control Panel (tweaks)
-   Cole no FINAL do styles.css
-   ========================= */
+  RM – Control Panel (tweaks)
+  Cole no FINAL do styles.css
+  ========================= */
 :root{
-  --rm-font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-  --rm-title-size: 22px;
-  --rm-subtitle-size: 12px;
+--rm-font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+--rm-title-size: 22px;
+--rm-subtitle-size: 12px;
 
-  /* Cards (ajuste aqui) */
-  --rm-card-w: 108px;     /* <= diminui para caber 1920px */
-  --rm-card-h: 44px;      /* importante: o JS vai ler isso */
-  --rm-card-radius: 10px;
-  --rm-card-pad-x: 10px;
-  --rm-card-pad-y: 7px;
+/* Cards (ajuste aqui) */
+--rm-card-w: 108px;     /* <= diminui para caber 1920px */
+--rm-card-h: 44px;      /* importante: o JS vai ler isso */
+--rm-card-radius: 10px;
+--rm-card-pad-x: 10px;
+--rm-card-pad-y: 7px;
 
-  /* Espaçamentos */
-  --rm-col-gap: 3px;
-  --rm-row-gap: 5px;      /* importante: o JS vai ler isso */
+/* Espaçamentos */
+--rm-col-gap: 3px;
+--rm-row-gap: 5px;      /* importante: o JS vai ler isso */
 
-  /* Linha de referência (Relative to zero/asset) */
-  --rm-baseline-h: 4px;
+/* Linha de referência (Relative to zero/asset) */
+--rm-baseline-h: 4px;
 
-  /* Transições */
-  --rm-trans: 180ms cubic-bezier(.2,.8,.2,1);
+/* Transições */
+--rm-trans: 180ms cubic-bezier(.2,.8,.2,1);
 }
 
 /* Fonte geral mais clean */
 body{
-  font-family: var(--rm-font);
+font-family: var(--rm-font);
 }
 
 /* Cabeçalho mais “clean” */
 header{
-  position: relative; /* necessário pro logo absoluto */
+position: relative; /* necessário pro logo absoluto */
 }
 header h1{
-  font-size: var(--rm-title-size);
-  letter-spacing: -0.02em;
-  font-weight: 750;
-  margin-bottom: 4px;
+font-size: var(--rm-title-size);
+letter-spacing: -0.02em;
+font-weight: 750;
+margin-bottom: 4px;
 }
 #subtitle{
-  font-size: var(--rm-subtitle-size);
-  color: #475569;
+font-size: var(--rm-subtitle-size);
+color: #475569;
 }
 
 /* Logo no canto superior direito */
 .brand-logo{
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  height: 34px;
-  width: auto;
-  object-fit: contain;
-  opacity: .95;
+position: absolute;
+top: 14px;
+right: 16px;
+height: 34px;
+width: auto;
+object-fit: contain;
+opacity: .95;
 }
 
 /* Menos espaço horizontal (pra caber tudo na tela) */
 #chart{
-  column-gap: var(--rm-col-gap);
+column-gap: var(--rm-col-gap);
 }
 
 /* Cards menores + valor embaixo do nome (igual BlackRock) */
 .card{
-  width: var(--rm-card-w);
-  height: var(--rm-card-h);
-  box-sizing: border-box;
-  padding: var(--rm-card-pad-y) var(--rm-card-pad-x);
-  border-radius: var(--rm-card-radius);
+width: var(--rm-card-w);
+height: var(--rm-card-h);
+box-sizing: border-box;
+padding: var(--rm-card-pad-y) var(--rm-card-pad-x);
+border-radius: var(--rm-card-radius);
 
-  display: flex;
-  flex-direction: column;     /* <<< nome em cima, valor embaixo */
-  align-items: flex-start;
-  justify-content: center;
-  gap: 2px;
+display: flex;
+flex-direction: column;     /* <<< nome em cima, valor embaixo */
+align-items: flex-start;
+justify-content: center;
+gap: 2px;
 
-  box-shadow: 0 1px 0 rgba(0,0,0,.05);
-  transition: filter var(--rm-trans), box-shadow var(--rm-trans);
+box-shadow: 0 1px 0 rgba(0,0,0,.05);
+transition: filter var(--rm-trans), box-shadow var(--rm-trans);
 }
 
 /* cuidado: NÃO usar transform no hover (transform já é usado pra posicionar os cards) */
 .card:hover{
-  filter: brightness(.985) saturate(1.03);
-  box-shadow: 0 8px 18px rgba(0,0,0,.08);
+filter: brightness(.985) saturate(1.03);
+box-shadow: 0 8px 18px rgba(0,0,0,.08);
 }
 
 .card .name{
-  font-size: 12px;
-  font-weight: 750;
-  line-height: 1.05;
-  max-width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+font-size: 12px;
+font-weight: 750;
+line-height: 1.05;
+max-width: 100%;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
 }
 
 .card .val{
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.05;
-  font-variant-numeric: tabular-nums;
-  opacity: .95;
+font-size: 11px;
+font-weight: 700;
+line-height: 1.05;
+font-variant-numeric: tabular-nums;
+opacity: .95;
 }
 
 /* Linha mais evidente no Relative to zero / Relative to asset */
 .baseline{
-  height: var(--rm-baseline-h);
-  border-radius: 999px;
-  background: rgba(15, 23, 42, .35);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,.35),
-    0 2px 10px rgba(0,0,0,.08);
+height: var(--rm-baseline-h);
+border-radius: 999px;
+background: rgba(15, 23, 42, .35);
+box-shadow:
+0 1px 0 rgba(255,255,255,.35),
+0 2px 10px rgba(0,0,0,.08);
 }
 
 /* Suaviza “troca de display” sem mexer no transform do card */
 .card{
-  animation: rmFadeIn 160ms ease-out;
+animation: rmFadeIn 160ms ease-out;
 }
 @keyframes rmFadeIn{
-  from{ opacity: 0; }
-  to{ opacity: 1; }
+from{ opacity: 0; }
+to{ opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce){
-  .card{ animation: none !important; transition: none !important; }
-}
-
-/* =========================
-   RM – Ajustes visuais (override)
-   Cole no FINAL do styles.css
-   ========================= */
-:root{
-  --rm-font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans";
-  --rm-title-size: 22px;
-
-  /* Cards: ajuste aqui até caber 1920x1080 sem scroll horizontal */
-  --rm-card-w: 104px;
-  --rm-card-h: 44px;
-  --rm-col-gap: 8px;
-
-  /* Transições */
-  --rm-trans: 220ms cubic-bezier(.2,.8,.2,1);
-
-  /* Linha de referência mais óbvia */
-  --rm-baseline-h: 5px;
-}
-
-/* Tipografia geral */
-body{ font-family: var(--rm-font); }
-
-/* Header mais clean */
-header{ position: relative; }
-header h1{
-  font-size: var(--rm-title-size);
-  letter-spacing: -0.02em;
-  font-weight: 750;
-}
-
-/* Espaçamento entre colunas */
-#chart{ column-gap: var(--rm-col-gap); }
-
-/* Cards: valor embaixo do nome (estilo BlackRock) */
-.card, .tile{
-  width: var(--rm-card-w);
-  height: var(--rm-card-h);
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 2px;
-
-  transition:
-    transform var(--rm-trans),
-    background-color var(--rm-trans),
-    filter var(--rm-trans),
-    box-shadow var(--rm-trans);
-}
-
-/* Evita “brigar” com o transform de posicionamento */
-.card:hover, .tile:hover{
-  filter: brightness(.985) saturate(1.03);
-  box-shadow: 0 10px 18px rgba(0,0,0,.08);
-}
-
-/* Nome/valor */
-.card .name, .tile .name{
-  font-size: 12px;
-  font-weight: 750;
-  line-height: 1.05;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-.card .val, .tile .val, .tile .value{
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.05;
-  font-variant-numeric: tabular-nums;
-  opacity: .95;
-}
-
-/* Linha de referência mais visível */
-.baseline{
-  height: var(--rm-baseline-h);
-  border-radius: 999px;
-  background: rgba(15, 23, 42, .38);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,.35),
-    0 2px 10px rgba(0,0,0,.10);
-}
-
-.brand-logo{
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  height: 34px;
-  width: auto;
-  object-fit: contain;
-  opacity: .95;
+.card{ animation: none !important; transition: none !important; }
 }
