@@ -840,6 +840,8 @@ function renderChart(dataset){
       card.dataset.assetId = a.id;
       card.dataset.colId = col.id;
 
+      const cls = (a.class || "Sem classe").trim();
+      
       // Color
       let bg = "#e2e8f0";
       if (state.highlightMode === "class") {
@@ -850,8 +852,6 @@ function renderChart(dataset){
         bg = valueToColor(v, retScale[col.id]);
       }
       
-      const cls = (a.class || "Sem classe").trim();
-
       card.style.background = bg;
 
       // Texto branco só para RV no highlight Classe
