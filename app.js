@@ -840,8 +840,6 @@ function renderChart(dataset){
       card.dataset.assetId = a.id;
       card.dataset.colId = col.id;
 
-      const cls = a.class || "Sem classe";
-
       // Color
       let bg = "#e2e8f0";
       if (state.highlightMode === "class") {
@@ -852,13 +850,14 @@ function renderChart(dataset){
         bg = valueToColor(v, retScale[col.id]);
       }
       
-      card.style.background = bg;
-      
-      // Texto: só RV fica branco quando highlight = Classe
-      card.style.color = (state.highlightMode === "class" && cls === "Renda Variável")
-        ? "#fff"
-        : "";
+      const cls = (a.class || "Sem classe").trim();
 
+      card.style.background = bg;
+
+      // Texto branco só para RV no highlight Classe
+      card.style.color =
+        (state.highlightMode === "class" && cls === "Renda Variável") ? "#fff" : "";
+      
     
       // Text
       const nameEl = document.createElement("div");
@@ -975,6 +974,20 @@ async function refresh(){
     ui.subtitle.textContent = "Erro ao carregar dataset.";
   }
 }
+
+function isDarkHex(color) {
+      if (typeof color !== "string") return false;
+      const hex = color.trim().replace("#", "");
+      if (hex.length !== 6) return false;
+    
+      const r = parseInt(hex.slice(0, 2), 16);
+      const g = parseInt(hex.slice(2, 4), 16);
+      const b = parseInt(hex.slice(4, 6), 16);
+    
+      // luminância (0-255)
+      const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      return lum < 140; // ajuste fino se quiser
+    }
 
 function wireUI(){
   // Geography
