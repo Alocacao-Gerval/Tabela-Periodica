@@ -852,7 +852,24 @@ function renderChart(dataset){
         bg = valueToColor(v, retScale[col.id]);
       }
       card.style.background = bg;
+      // Texto: branco para Renda Variável quando highlight = Classe
+      if (state.highlightMode === "class" && cls === "Renda Variável") {
+        card.style.color = "#fff";
+      } else {
+        card.style.color = "#e2e8f0"; // cor padrão escura
+      }
 
+      function isDark(hex) {
+        // aceita "#RRGGBB"
+        const h = (hex || "").replace("#", "");
+        if (h.length !== 6) return false;
+        const r = parseInt(h.slice(0,2), 16);
+        const g = parseInt(h.slice(2,4), 16);
+        const b = parseInt(h.slice(4,6), 16);
+        // luminância aproximada
+        const lum = 0.2126*r + 0.7152*g + 0.0722*b;
+        return lum < 140; // ajuste fino se quiser
+      }
       // Text
       const nameEl = document.createElement("div");
       nameEl.className = "name";
