@@ -834,11 +834,14 @@ function renderChart(dataset){
     // Cards
     for (const a of dataset.assets){
       const v = a.values[col.id];
+     
       const card = document.createElement("div");
       card.className = "card";
       card.dataset.assetId = a.id;
       card.dataset.colId = col.id;
 
+      const cls = a.class || "Sem classe";
+      
       // Color
       let bg = "#e2e8f0";
       if (state.highlightMode === "class"){
