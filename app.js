@@ -855,11 +855,16 @@ function renderChart(dataset){
         bg = valueToColor(v, retScale[col.id]);
       }
       card.style.background = bg;
-      // Texto: branco para Renda Variável quando highlight = Classe
+
+      // cls tem que estar definido antes (fora do if do highlight)
+      const cls = a.class || "Sem classe";
+
+      // Só Renda Variável fica com texto branco (quando highlight = Classe)
       if (state.highlightMode === "class" && cls === "Renda Variável") {
         card.style.color = "#fff";
       } else {
-        card.style.color = "#e2e8f0"; // cor padrão escura
+        card.style.color = "";      // volta pro padrão do CSS (recomendado)
+        // ou: card.style.color = "#0b1220";
       }
 
       function isDark(hex) {
