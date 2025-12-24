@@ -176,11 +176,13 @@ line-height: 1.1;
 overflow: hidden;
 text-overflow: ellipsis;
 white-space: nowrap;
+color: inherit;
 }
 .card .val{
 font-size: 12px;
 font-weight: 700;
 opacity: 0.95;
+color: inherit;
 }
 
 /* Hover highlight across columns */
