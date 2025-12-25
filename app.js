@@ -854,9 +854,8 @@ function renderChart(dataset){
       
       card.style.background = bg;
 
-      // Texto branco só para RV no highlight Classe
-      card.style.color =
-        (state.highlightMode === "class" && cls === "Renda Variável") ? "#fff" : "";
+      // Texto automático: branco quando o fundo for escuro
+      card.style.color = isDarkHex(bg) ? "#fff" : "";
       
     
       // Text
