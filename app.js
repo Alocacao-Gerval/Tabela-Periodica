@@ -346,9 +346,7 @@ function prepareDataset(quantumRows, registryRows, datasetConfig, columns){
     const m = columns.annualisedCol.match(/\((.*?)\)/);
     if (m) periodText = m[1];
   }
-  const subtitle = periodText
-    ? `${datasetConfig.label} • Período: ${periodText} • RF: ${datasetConfig.riskFreeQuantumName}`
-    : `${datasetConfig.label} • RF: ${datasetConfig.riskFreeQuantumName}`;
+  const subtitle = "";
 
   // Ajusta o label do RF+ para ficar "CDI+" ou "SOFR+" automaticamente
   for (const c of columns.metricCols){
