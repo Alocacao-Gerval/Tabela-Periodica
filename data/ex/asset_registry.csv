@@ -1,16 +1,17 @@
 asset;class;asset_color;quantum_name;class_color
 Cmdty;Others;#7030A0;S&P GSCI Total Return (Moeda Original);#ED7D31
-EM Eq.;Equities;#5B9BD5;MSCI EMTR;#002A54
-SPX;Equities;#70AD47;S&P 500 Total Return (Moeda Original);#002A54
-60-40;Equities;#FFC000;Pfolio 60-40;#002A54
-Arroj;Perfil;#FFFFFF;P. Ext. Arroj;#D9D9D9
-Cembi BR;Fixed Income;#FFC000;CEMBI B BR;#009D90
-Mod;Perfil;#E2EFDA;P. Ext. Mod;#D9D9D9
-Cons;Perfil;#A6A6A6;P. Ext. Cons;#D9D9D9
-CPI;Fixed Income;#ED7D31;CPI;#009D90
+EM Eq.;Equities;#203764;MSCI EMTR;#002A54
+SPX;Equities;#5B9BD5;S&P 500 Total Return (Moeda Original);#002A54
+60-40;Equities;#70AD47;Pfolio 60-40;#002A54
+Arroj;Perfil;#A6A6A6;P. Ext. Arroj;#D9D9D9
+Cembi BR;Fixed Income;#833C0C;CEMBI B BR;#009D90
+Mod;Perfil;#D9D9D9;P. Ext. Mod;#D9D9D9
+Cons;Perfil;#FFFFFF;P. Ext. Cons;#D9D9D9
+CPI;Fixed Income;#F5DEB3;CPI;#009D90
 US HY;Fixed Income;#C65911;US High Yield BofA Merrill Lynch (Moeda Original);#009D90
 SOFR;Fixed Income;#0070C0;0-3m;#009D90
-REIT;Others;#4472C4;MSCI US REIT (Moeda Original);#ED7D31
+REIT;Others;#806000;MSCI US REIT (Moeda Original);#ED7D31
 CDI D�lar;Fixed Income;#203764;CDI D�lar;#009D90
-Gold;Others;#ED7D31;Gold - COMEX (Moeda Original);#ED7D31
-AGG;Fixed Income;#009D90;US Barclays Agg Total Return Value (Moeda Original);#009D90
+Gold;Others;#C00000;Gold - COMEX (Moeda Original);#ED7D31
+AGG;Fixed Income;#ED7D31;US Barclays Agg Total Return Value (Moeda Original);#009D90
+
