@@ -1,16 +1,15 @@
 asset;class;asset_color;quantum_name;class_color
-D�lar;Multimercado;#7030A0;D�lar;#ED7D31
-SP500 BRL;Renda Vari�vel;#5B9BD5;S&P 500;#002A54
-CDI;Renda Fixa;#70AD47;CDI;#009D90
-IHFA;Multimercado;#FFC000;IHFA;#ED7D31
-Cons;Perfil;#FFFFFF;PERFIL CONS BR RETRO;#D9D9D9
-HFG;Multimercado;#FFC000;HFG FIC MULTIMERCADO;#ED7D31
-IPCA;Renda Fixa;#E2EFDA;IPCA;#009D90
-Mod;Perfil;#D9D9D9;PERFIL MOD BR RETRO;#D9D9D9
-Arroj;Perfil;#A6A6A6;PERFIL ARROJ BR RETRO;#D9D9D9
-IRF-M;Renda Fixa;#ED7D31;IRF-M;#009D90
-IMA-B;Renda Fixa;#C65911;IMA-B;#009D90
-IFIX;Multimercado;#806000;IFIX;#ED7D31
-FFG;Renda Vari�vel;#0070C0;FFG FIF A��ES;#002A54
-IBOV;Renda Vari�vel;#4472C4;IBOVESPA;#002A54
-GGBR4;Renda Vari�vel;#203764;GERDAU PN N1 - GGBR4;#002A54
+Cmdty;Others;#7030A0;S&P GSCI Total Return (Moeda Original);#ED7D31
+EM Eq.;Equities;#5B9BD5;MSCI EM TR;#002A54
+SPX;Equities;#70AD47;S&P 500 Total Return (Moeda Original);#002A54
+60-40;Equities;#FFC000;Pfolio 60-40;#002A54
+Arroj;Perfil;#FFFFFF;P. Ext. Arroj.;#D9D9D9
+Cembi BR;Fixed Income;#FFC000;CEMBI BROAD BR;#009D90
+Mod;Perfil;#E2EFDA;P. Ext. Mod.;#D9D9D9
+Cons;Perfil;#A6A6A6;P. Ext. Cons.;#D9D9D9
+CPI;Fixed Income;#ED7D31;CPI;#009D90
+US HY;Fixed Income;#C65911;US High Yield BofA Merrill Lynch (Moeda Original);#009D90
+SOFR;Fixed Income;#0070C0;0-3m;#009D90
+REIT;Others;#4472C4;MSCI US REIT (Moeda Original);#ED7D31
+CDI D�lar;Fixed Income;#203764;CDI D�lar;#009D90
+Gold;Others;#ED7D31;Gold - COMEX (Moeda Original);#ED7D31
