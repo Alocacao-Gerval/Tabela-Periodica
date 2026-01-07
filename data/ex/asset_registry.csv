@@ -2,21 +2,20 @@ asset;class;asset_color;quantum_name;class_color
 Cmdty;Others;#7030A0;S&P GSCI Total Return (Moeda Original);#FFC000
 EM Eq.;Equities;#203764;MSCI EMTR;#203764
 SPX;Equities;#5B9BD5;S&P 500 Total Return (Moeda Original);#203764
-60-40;Benchmark;#70AD47;Pfolio 60-40;#FFFFFF
+60-40;Benchmark;#70AD47;Pfolio 60-40;#262626
 Arroj;Perfil;#A6A6A6;P. Ext. Arroj;#D9D9D9
-Cembi BR;Benchmark;#833C0C;CEMBI B BR;#FFFFFF
+Cembi BR;Benchmark;#833C0C;CEMBI B BR;#262626
 Mod;Perfil;#D9D9D9;P. Ext. Mod;#D9D9D9
 Cons;Perfil;#FFFFFF;P. Ext. Cons;#D9D9D9
-CPI;Benchmark;#F5DEB3;CPI;#FFFFFF
+CPI;Benchmark;#F5DEB3;CPI;#262626
 US HY;Fixed Income;#C65911;US High Yield BofA Merrill Lynch (Moeda Original);#C65911
-SOFR;Benchmark;#0070C0;0-3m;#FFFFFF
+SOFR;Benchmark;#0070C0;0-3m;#262626
 REIT;Others;#806000;MSCI US REIT (Moeda Original);#FFC000
-CDI Dolar;Benchmark;#203764;CDI D�lar;#FFFFFF
+CDI Dolar;Benchmark;#203764;CDI D�lar;#262626
 Gold;Others;#C00000;Gold - COMEX (Moeda Original);#FFC000
 AGG;Fixed Income;#ED7D31;US Barclays Agg Total Return Value (Moeda Original);#C65911
-HFRX +1;Benchmark;#C399A6;�ndice HFRX Global Hedge Fund Index (Moeda Original) +1,000%;#FFFFFF
+HFRX +1;Benchmark;#C399A6;�ndice HFRX Global Hedge Fund Index (Moeda Original) +1,000%;#262626
 Stark B;Fixed Income;#C65911;Stark Fund B;#C65911
 Stark C;Others;#31C5AC;Stark Fund C;#FFC000
-Cembi BR 90;Benchmark;#EE6E8C;Cembi Broad 90;#FFFFFF
+Cembi 90;Benchmark;#EE6E8C;Cembi 90;#262626
 DXY;Others;#66FF33;US Dollar Index - DXY (Moeda Original);#FFC000
-
