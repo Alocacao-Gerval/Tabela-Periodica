@@ -11,10 +11,12 @@ CPI;Benchmark;#F5DEB3;CPI;#FFFFFF
 US HY;Fixed Income;#C65911;US High Yield BofA Merrill Lynch (Moeda Original);#C65911
 SOFR;Benchmark;#0070C0;0-3m;#FFFFFF
 REIT;Others;#806000;MSCI US REIT (Moeda Original);#FFC000
-CDI D�lar;Benchmark;#203764;CDI D�lar;#FFFFFF
+CDI Dolar;Benchmark;#203764;CDI D�lar;#FFFFFF
 Gold;Others;#C00000;Gold - COMEX (Moeda Original);#FFC000
 AGG;Fixed Income;#ED7D31;US Barclays Agg Total Return Value (Moeda Original);#C65911
 HFRX +1;Benchmark;#C399A6;�ndice HFRX Global Hedge Fund Index (Moeda Original) +1,000%;#FFFFFF
 Stark B;Fixed Income;#C65911;Stark Fund B;#C65911
 Stark C;Others;#31C5AC;Stark Fund C;#FFC000
 Cembi BR 90;Benchmark;#EE6E8C;Cembi Broad 90;#FFFFFF
+DXY;Others;#66FF33;US Dollar Index - DXY (Moeda Original);#FFC000
+
