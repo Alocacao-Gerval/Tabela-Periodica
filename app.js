@@ -14,7 +14,7 @@ const DATASETS = {
     folder: "data/ex",
     riskFreeQuantumName: "SOFR",
     currency: "USD",
-    naMetricsAssets: ["0-3m", "CPI"],
+    naMetricsAssets: ["SOFR", "CPI"],
     naMetricsCols: ["vol", "sharpe", "max_dd"],
   },
 };
@@ -331,7 +331,7 @@ function prepareDataset(quantumRows, registryRows, datasetConfig, columns){
     // Brasil: CDI e IPCA | Exterior: SOFR e CPI
     const skipSet = (datasetConfig.label === "Brasil")
       ? new Set(["cdi", "ipca"])
-      : new Set(["sofr", "cpi"]);
+      : new Set(["sofr","0-3m","cpi"]);
 
     if (skipSet.has(nameKey)) {
       a.values.vol = null;
