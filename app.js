@@ -14,7 +14,7 @@ const DATASETS = {
     folder: "data/ex",
     riskFreeQuantumName: "SOFR",
     currency: "USD",
-    naMetricsAssets: ["SOFR", "CPI"],
+    naMetricsAssets: ["0-3m", "CPI"],
     naMetricsCols: ["vol", "sharpe", "max_dd"],
   },
 };
