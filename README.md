@@ -1,4 +1,4 @@
-# Return Map (
+# Return Map
 
 Este projeto, estilo Return Map da BlackRock, é um refinamento da antiga Tabela Períodica feita pelo time de Alocação, mas com uma interface e funções mais interativas.
 
