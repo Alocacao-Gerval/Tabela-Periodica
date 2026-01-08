@@ -1,6 +1,6 @@
-# Return Map (starter)
+# Return Map (
 
-Este projeto é um **MVP gratuito** de um Return Map no estilo BlackRock, mas lendo seus dados do **CSV do Quantum** e do seu **asset_registry.csv**.
+Este projeto, estilo Return Map da BlackRock, é um refinamento da antiga Tabela Períodica feita pelo time de Alocação, mas com uma interface e funções mais interativas.
 
 ## O que ele já faz
 - 3 modos de display: **Stacked**, **Relative to zero**, **Relative to asset**
@@ -8,10 +8,10 @@ Este projeto é um **MVP gratuito** de um Return Map no estilo BlackRock, mas le
 - Hover: destaca o mesmo ativo em todas as colunas + tooltip com métricas
 - Colunas:
   - retornos por ano (detectados automaticamente no CSV)
-  - **Anual. (RF+)** (CDI+ ou SOFR+)
+  - **Anual. (CDI+ ou SOFR+)**
   - **Anual. Total**
   - **Vol.**
-  - **Sharpe** (do jeito que você pediu: (RF+)/Vol)
+  - **Sharpe**
   - **Máx DD**
 
 > RF (risk-free): no dataset Brasil ele procura a linha do **CDI**. No dataset Exterior ele vai procurar a linha do **SOFR**.
@@ -19,16 +19,16 @@ Este projeto é um **MVP gratuito** de um Return Map no estilo BlackRock, mas le
 ## Onde colocar os dados
 - Brasil:
   - `data/br/CSV_Quantum.csv`
-  - `data/br/asset_registry.csv`
+  - `data/br/asset_registry_br.csv`
 - Exterior:
   - `data/ex/CSV_Quantum.csv`
-  - `data/ex/asset_registry.csv`
+  - `data/ex/asset_registry_ex.csv`
 
-## asset_registry.csv (recomendado)
+## asset_registry.csv
 O app aceita dois formatos:
-- Formato atual (mínimo):
+- Formato mínimo:
   - `asset;class;color`
-- Formato recomendado (para o futuro):
+- Formato atual (recomendado):
   - `asset;quantum_name;class;asset_color;class_color`
 
 ## Como publicar (Cloudflare Pages)
@@ -45,14 +45,9 @@ O app aceita dois formatos:
 - Commit & push no GitHub
 - O Pages redeploya automaticamente
 
-## Próximos upgrades (quando você quiser)
-- Colocar `Exterior` com dados (é só preencher `data/ex/`)
+## Próximos upgrades
 - Proteger com login (Cloudflare Access)
 - Gerar JSON no n8n e não publicar o CSV (quando o operacional virar prioridade)
-
-
-## Rodar localmente (para testar antes de publicar)
-Como o app usa `fetch()` para ler os CSVs, é melhor rodar com um servidor local simples.
 
 Opção A (Python, normalmente já vem instalado):
 1. Abra o Terminal na pasta do projeto
