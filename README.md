@@ -1,6 +1,6 @@
 # Return Map
 
-Este projeto, estilo Return Map da BlackRock, é um refinamento da antiga Tabela Períodica feita pelo time de Alocação, mas com uma interface e funções mais interativas.
+Este projeto, estilo Return Map da BlackRock, é um refinamento da antiga Tabela Períodica feita pelo time de Alocação, com interface e funções mais interativas.
 
 ## O que ele já faz
 - 3 modos de display: **Stacked**, **Relative to zero**, **Relative to asset**
