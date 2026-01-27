@@ -247,7 +247,7 @@ color: #334155;
 --rm-subtitle-size: 12px;
 
 /* Cards (ajuste aqui) */
---rm-card-w: 120px;     /* <= diminui para caber 1920px */
+--rm-card-w: 130px;     /* <= diminui para caber 1920px */
 --rm-card-h: 38px;      /* importante: o JS vai ler isso */
 --rm-card-radius: 10px;
 --rm-card-pad-x: 10px;
