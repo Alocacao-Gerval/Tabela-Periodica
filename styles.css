@@ -116,14 +116,14 @@ background: #fff;
 
 .chart{
 display: flex;
-gap: 10px !important;
+gap: 7px !important;
 overflow-x: auto;
 padding-bottom: 8px;
 }
 
 /* Column */
 .column{
-min-width: 100px !important;
+min-width: 140px !important;
 flex: 0 0 auto;
 }
 .col-header{
