@@ -116,7 +116,7 @@ background: #fff;
 
 .chart{
 display: flex;
-gap: 7px !important;
+gap: 10px !important;
 overflow-x: auto;
 padding-bottom: 8px;
 }
@@ -127,7 +127,7 @@ min-width: 100px !important;
 flex: 0 0 auto;
 }
 .col-header{
-font-size: 12px; /* fonte do cabeçalho de cada coluna */
+font-size: 16px; /* fonte do cabeçalho de cada coluna */
 font-weight: 600;
 color: #0f172a;
 text-align: left;
@@ -247,14 +247,14 @@ color: #334155;
 --rm-subtitle-size: 12px;
 
 /* Cards (ajuste aqui) */
---rm-card-w: 130px;     /* <= diminui para caber 1920px */
+--rm-card-w: 150px;     /* <= diminui para caber 1920px */
 --rm-card-h: 36px;      /* importante: o JS vai ler isso */
 --rm-card-radius: 10px;
 --rm-card-pad-x: 10px;
 --rm-card-pad-y: 7px;
 
 /* Espaçamentos */
---rm-col-gap: 10px;
+--rm-col-gap: 7px;
 --rm-row-gap: 3px;      /* importante: o JS vai ler isso */
 
 /* Linha de referência (Relative to zero/asset) */
