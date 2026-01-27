@@ -116,7 +116,7 @@ background: #fff;
 
 .chart{
 display: flex;
-gap: 10px;
+gap: 7px; /* distância entre as colunas */
 overflow-x: auto;
 padding-bottom: 8px;
 }
@@ -127,11 +127,11 @@ min-width: 120px;
 flex: 0 0 auto;
 }
 .col-header{
-font-size: 15px;
-font-weight: 700;
+font-size: 12px; /* fonte do cabeçalho de cada coluna */
+font-weight: 600;
 color: #0f172a;
 text-align: left;
-margin-bottom: 8px;
+margin-bottom: 4px;
 }
 .col-body{
 position: relative;
