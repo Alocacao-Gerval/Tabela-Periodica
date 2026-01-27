@@ -325,7 +325,7 @@ box-shadow: 0 8px 18px rgba(0,0,0,.08);
 }
 
 .card .name{
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 750;
   line-height: 1.05;
 
@@ -337,7 +337,7 @@ box-shadow: 0 8px 18px rgba(0,0,0,.08);
 }
 
 .card .val{
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
   line-height: 1.05;
   font-variant-numeric: tabular-nums;
