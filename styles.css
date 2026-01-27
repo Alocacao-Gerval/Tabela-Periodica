@@ -116,7 +116,7 @@ background: #fff;
 
 .chart{
 display: flex;
-gap: 0px !important;
+gap: 5px !important;
 overflow-x: auto;
 padding-bottom: 8px;
 }
