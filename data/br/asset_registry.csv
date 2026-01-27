@@ -1,6 +1,6 @@
 asset;class;asset_color;quantum_name;class_color
 Dolar;Benchmark;#7030A0;D�lar;#FFC000
-SP500 BRL;Renda Variavel;#5B9BD5;S&P 500;#002A54
+SP500;Renda Variavel;#5B9BD5;S&P 500;#002A54
 CDI;Benchmark;#70AD47;CDI;#FFC000
 IHFA;Multimercado;#FFC000;IHFA;#ED7D31
 Cons;Perfil;#FFFFFF;Perfil Cons BR Retro;#D9D9D9
@@ -14,3 +14,4 @@ IFIX;Multimercado;#806000;IFIX;#ED7D31
 FFG;Renda Variavel;#0070C0;FFG FIF A��ES;#002A54
 IBOV;Renda Variavel;#4472C4;IBOVESPA;#002A54
 GGBR4;Renda Variavel;#203764;GERDAU PN N1 - GGBR4;#002A54
+
