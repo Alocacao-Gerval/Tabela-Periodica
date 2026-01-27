@@ -247,15 +247,15 @@ color: #334155;
 --rm-subtitle-size: 12px;
 
 /* Cards (ajuste aqui) */
---rm-card-w: 110px;     /* <= diminui para caber 1920px */
+--rm-card-w: 120px;     /* <= diminui para caber 1920px */
 --rm-card-h: 36px;      /* importante: o JS vai ler isso */
 --rm-card-radius: 10px;
 --rm-card-pad-x: 10px;
 --rm-card-pad-y: 7px;
 
 /* Espaçamentos */
---rm-col-gap: 3px;
---rm-row-gap: 3px;      /* importante: o JS vai ler isso */
+--rm-col-gap: 5px;
+--rm-row-gap: 4px;      /* importante: o JS vai ler isso */
 
 /* Linha de referência (Relative to zero/asset) */
 --rm-baseline-h: 3px;
