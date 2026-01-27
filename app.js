@@ -242,7 +242,7 @@ function extractColumns(quantumHeader){
 
   const metricCols = [
     { id: "annualised_excess", label: "Anual. (RF+)", kind: "metric", sort: "desc" },
-    { id: "annualised_total", label: "Anual. Total", kind: "metric", sort: "desc" },
+   // { id: "annualised_total", label: "Anual. Total", kind: "metric", sort: "desc" },
     { id: "vol", label: "Vol.", kind: "metric", sort: "desc" },
     { id: "sharpe", label: "Sharpe", kind: "metric", sort: "desc" },
     { id: "max_dd", label: "Máx DD", kind: "metric", sort: "desc" },
