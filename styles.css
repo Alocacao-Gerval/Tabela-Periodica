@@ -248,10 +248,10 @@ color: #334155;
 
 /* Cards (ajuste aqui) */
 --rm-card-w: 140px;     /* <= diminui para caber 1920px */
---rm-card-h: 36px;      /* importante: o JS vai ler isso */
+--rm-card-h: 34px;      /* importante: o JS vai ler isso */
 --rm-card-radius: 10px;
 --rm-card-pad-x: 10px;
---rm-card-pad-y: 7px;
+--rm-card-pad-y: 5px;
 
 /* Espaçamentos */
 --rm-col-gap: 7px;
