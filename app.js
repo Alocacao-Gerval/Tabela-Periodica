@@ -370,7 +370,7 @@ function prepareDataset(quantumRows, registryRows, datasetConfig, columns){
 
 // Layout computation
 const CARD_H = 44;
-const GAP = 8;
+const GAP = 4;
 
 function rankAssets(assets, colId){
   // sort desc, nulls last
