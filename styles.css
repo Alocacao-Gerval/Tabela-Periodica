@@ -154,7 +154,7 @@ opacity: 0.85;
 position: absolute;
 left: 0;
 right: 0;
-height: 33px;
+height: 36px;
 border-radius: 10px;
   padding: 4px 6px;
   padding: 4px 4px;
@@ -247,7 +247,7 @@ color: #334155;
 --rm-subtitle-size: 12px;
 
 /* Cards (ajuste aqui) */
---rm-card-w: 140px;     /* <= diminui para caber 1920px */
+--rm-card-w: 120px;     /* <= diminui para caber 1920px */
 --rm-card-h: 38px;      /* importante: o JS vai ler isso */
 --rm-card-radius: 10px;
 --rm-card-pad-x: 10px;
