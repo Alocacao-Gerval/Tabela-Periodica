@@ -369,7 +369,7 @@ function prepareDataset(quantumRows, registryRows, datasetConfig, columns){
 }
 
 // Layout computation
-const CARD_H = 44;
+const CARD_H = 36;
 const GAP = 0;
 
 function rankAssets(assets, colId){
@@ -824,7 +824,16 @@ function renderChart(dataset){
     const baseY = layout.baselines[col.id];
     if (baseY !== null && baseY !== undefined){
       const line = document.createElement("div");
-      line.className = "baseline";
+      const isFirstCol = ui.chart.children.length === 0;
+      if (isFirstCol){
+        line.className = "baseline baseline-labeled";
+        const labelText = state.displayMode === "asset"
+          ? (dataset.assets.find(a => a.id === state.referenceAssetId)?.display ?? "Ref")
+          : "0%";
+        line.dataset.label = labelText;
+      } else {
+        line.className = "baseline";
+      }
       line.style.top = baseY + "px";
       bodyEl.appendChild(line);
     }
@@ -962,8 +971,8 @@ async function refresh(){
     renderChart(dataset);
   } catch (err){
     ui.chart.innerHTML = `
-      <div class="error-msg">
-        <strong>Não foi possível carregar os dados.</strong><br>
+      <div style="padding: 14px; color:#b91c1c;">
+        <strong>Não foi possível carregar os dados.</strong><br/>
         Verifique se os arquivos do dataset existem em <code>data/${state.geography}/</code>.<br/>
         <small>${String(err.message || err)}</small>
       </div>
