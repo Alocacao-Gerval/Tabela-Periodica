@@ -273,26 +273,34 @@ body {
   min-height: 0;
 }
 
+/* .chart-wrap — visual (borda, fundo, radius). Sem overflow. */
 .chart-wrap {
   background: var(--clr-surface);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-xl);
-  padding: 14px 14px 8px;
-  overflow: hidden;
+  padding: 14px 14px 14px;
 }
 
-.chart {
-  display: flex;
-  gap: var(--col-gap);
+/* .chart-scroll — único elemento com overflow. Faz scroll horizontal
+   sem cortar os cards na vertical (overflow-y permanece visible). */
+.chart-scroll {
   overflow-x: auto;
+  overflow-y: visible;
   padding-bottom: 4px;
   scrollbar-width: thin;
   scrollbar-color: var(--clr-border) transparent;
 }
 
-.chart::-webkit-scrollbar { height: 4px; }
-.chart::-webkit-scrollbar-track { background: transparent; }
-.chart::-webkit-scrollbar-thumb { background: var(--clr-border); border-radius: 99px; }
+.chart-scroll::-webkit-scrollbar { height: 4px; }
+.chart-scroll::-webkit-scrollbar-track { background: transparent; }
+.chart-scroll::-webkit-scrollbar-thumb { background: var(--clr-border); border-radius: 99px; }
+
+/* .chart — flex container. Cresce livremente na vertical. */
+.chart {
+  display: flex;
+  gap: var(--col-gap);
+  min-width: max-content;
+}
 
 /* ── Coluna ──────────────────────────────────────────────────── */
 .column {
