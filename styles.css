@@ -4,9 +4,9 @@
 
 /* ── Design tokens ──────────────────────────────────────────────── */
 :root {
-  --font-display: 'Syne',    ui-sans-serif, sans-serif;
-  --font-body:    'DM Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-mono:    'DM Mono', ui-monospace, monospace;
+  --font-display: 'Syne',    ui-sans-serif, sans-serif;   /* fonte do título "TABELA PERIÓDICA" */
+  --font-body:    'DM Sans', ui-sans-serif, system-ui, sans-serif;   /* fonte de tudo mais */
+  --font-mono:    'DM Mono', ui-monospace, monospace;   /* fonte dos números */
 
   --clr-ink:        #0c1220;
   --clr-ink-mid:    #3a4558;
@@ -21,10 +21,10 @@
   --clr-header-txt: #ffffff;
 
   /* Cards */
-  --card-w:   108px;
-  --card-h:   36px;     /* DEVE bater com CARD_H no app.js */
-  --col-gap:  4px;
-  --radius-sm: 5px;
+  --card-w:   108px;      /* largura de cada célula */
+  --card-h:   36px;      /* altura de cada célula — DEVE bater com CARD_H no app.js */
+  --col-gap:  4px;      /* espaço entre colunas */
+  --radius-sm: 5px;     /* arredondamento dos cards */
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
@@ -292,7 +292,7 @@ body {
 }
 
 .col-header {
-  font-size: 11px;
+  font-size: 11px;   /* tamanho dos anos (col-header) */
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -364,7 +364,7 @@ body {
 }
 
 .card .name {
-  font-size: 11px;
+  font-size: 11px;   /* nome do ativo */
   font-weight: 600;
   line-height: 1.1;
   flex: 1 1 auto;
@@ -377,7 +377,7 @@ body {
 
 .card .val {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 10.5px;   /* número do retorno */
   font-weight: 500;
   flex: 0 0 auto;
   white-space: nowrap;
