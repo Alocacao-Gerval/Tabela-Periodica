@@ -21,8 +21,8 @@
   --clr-header-txt: #ffffff;
 
   /* Cards */
-  --card-w:   108px;      /* largura de cada célula */
-  --card-h:   36px;      /* altura de cada célula — DEVE bater com CARD_H no app.js */
+  --card-w:   114px;      /* largura de cada célula */
+  --card-h:   40px;      /* altura de cada célula — DEVE bater com CARD_H no app.js */
   --col-gap:  4px;      /* espaço entre colunas */
   --radius-sm: 5px;     /* arredondamento dos cards */
   --radius-md: 8px;
