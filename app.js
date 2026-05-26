@@ -188,7 +188,7 @@ function extractColumns(quantumHeader){
     const hn = normalize(hs);
 
     // Retorno (anos / períodos)
-    // Aceita "diária" e também CSV com encoding quebrado ("di ria") via normalize()
+    // Aceita "diária" e também CSV com encoding quebrado ("di�ria") via normalize()
     if (/^retorno\s*-\s*di.?ria\s*\(/.test(hn)){
       // (2016)
       const mYear = hs.match(/\((\d{4})\)/);
@@ -462,8 +462,19 @@ if (displayMode === "zero"){
       globalMaxY = 0;
     }
 
-    const height = (globalMaxY - globalMinY + 1)*(CARD_H+GAP) - GAP;
-    const baselineY = (0 - globalMinY)*(CARD_H+GAP) - GAP/2;
+    // HEADER_H: altura do col-header flutuante no modo zero (deve bater com CSS .col-header--zero height)
+    const HEADER_H = 22;
+    const HEADER_GAP = 4; // gap entre cards e o header, em cada lado
+
+    // Positivos (y < 0): slot = (y - globalMinY)*(CARD_H+GAP), mas devem terminar HEADER_GAP antes do header
+    // Negativos (y > 0): slot = posição após o header + HEADER_GAP
+    // O header fica em: baselineY = nPos * (CARD_H+GAP) + HEADER_GAP
+    // (nPos = -globalMinY para a coluna com mais positivos)
+    // Para manter alinhamento global, usamos globalMinY.
+
+    const nPosGlobal = -globalMinY; // quantidade de slots positivos no global
+    const baselineY = nPosGlobal * (CARD_H+GAP) + HEADER_GAP;
+    const height = baselineY + HEADER_H + HEADER_GAP + (globalMaxY) * (CARD_H+GAP);
 
     for (const col of colDefs){
       const colPos = {};
@@ -471,7 +482,15 @@ if (displayMode === "zero"){
       for (const a of assets){
         const y = colY[a.id];
         if (y === undefined) continue;
-        colPos[a.id] = { top: (y - globalMinY)*(CARD_H+GAP) };
+        let top;
+        if (y < 0){
+          // Positivo: conta de cima, com gap antes do header
+          top = (y - globalMinY)*(CARD_H+GAP);
+        } else {
+          // Negativo/missing: após header + gap
+          top = baselineY + HEADER_H + HEADER_GAP + (y - 1)*(CARD_H+GAP);
+        }
+        colPos[a.id] = { top };
       }
       positions[col.id] = colPos;
       baselines[col.id] = baselineY;
@@ -823,7 +842,9 @@ function renderChart(dataset){
     // Baseline: no modo zero/asset o col-header desce para a posição do zero,
     // dividindo positivos (acima) de negativos (abaixo). Sem linha cinza.
     const baseY = layout.baselines[col.id];
-    const isRelativeMode = (baseY !== null && baseY !== undefined);
+    // Header flutua na baseline apenas no modo zero.
+    // No modo asset, o header permanece no topo (como Stacked).
+    const isRelativeMode = (baseY !== null && baseY !== undefined) && state.displayMode === "zero";
 
     // Cards
     for (const a of dataset.assets){
