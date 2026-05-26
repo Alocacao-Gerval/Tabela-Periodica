@@ -188,7 +188,7 @@ function extractColumns(quantumHeader){
     const hn = normalize(hs);
 
     // Retorno (anos / períodos)
-    // Aceita "diária" e também CSV com encoding quebrado ("di�ria") via normalize()
+    // Aceita "diária" e também CSV com encoding quebrado ("di ria") via normalize()
     if (/^retorno\s*-\s*di.?ria\s*\(/.test(hn)){
       // (2016)
       const mYear = hs.match(/\((\d{4})\)/);
@@ -962,8 +962,8 @@ async function refresh(){
     renderChart(dataset);
   } catch (err){
     ui.chart.innerHTML = `
-      <div style="padding: 14px; color:#b91c1c;">
-        <strong>Não foi possível carregar os dados.</strong><br/>
+      <div class="error-msg">
+        <strong>Não foi possível carregar os dados.</strong><br>
         Verifique se os arquivos do dataset existem em <code>data/${state.geography}/</code>.<br/>
         <small>${String(err.message || err)}</small>
       </div>
