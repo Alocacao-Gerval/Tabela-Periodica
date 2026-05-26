@@ -820,23 +820,10 @@ function renderChart(dataset){
     bodyEl.className = "col-body";
     bodyEl.style.height = layout.height + "px";
 
-    // Baseline line (for zero/asset modes)
+    // Baseline: no modo zero/asset o col-header desce para a posição do zero,
+    // dividindo positivos (acima) de negativos (abaixo). Sem linha cinza.
     const baseY = layout.baselines[col.id];
-    if (baseY !== null && baseY !== undefined){
-      const line = document.createElement("div");
-      const isFirstCol = ui.chart.children.length === 0;
-      if (isFirstCol){
-        line.className = "baseline baseline-labeled";
-        const labelText = state.displayMode === "asset"
-          ? (dataset.assets.find(a => a.id === state.referenceAssetId)?.display ?? "Ref")
-          : "0%";
-        line.dataset.label = labelText;
-      } else {
-        line.className = "baseline";
-      }
-      line.style.top = baseY + "px";
-      bodyEl.appendChild(line);
-    }
+    const isRelativeMode = (baseY !== null && baseY !== undefined);
 
     // Cards
     for (const a of dataset.assets){
@@ -922,8 +909,22 @@ function renderChart(dataset){
       bodyEl.appendChild(card);
     }
 
-    colEl.appendChild(headerEl);
-    colEl.appendChild(bodyEl);
+    if (isRelativeMode){
+      // Header flutua dentro do col-body, na posição do zero
+      headerEl.style.position = "absolute";
+      headerEl.style.top = baseY + "px";
+      headerEl.style.left = "0";
+      headerEl.style.right = "0";
+      headerEl.classList.add("col-header--zero");
+      bodyEl.appendChild(headerEl);
+      colEl.appendChild(bodyEl);
+    } else {
+      // Modo Stacked: header fixo no topo (comportamento padrão)
+      headerEl.style.position = "";
+      headerEl.style.top = "";
+      colEl.appendChild(headerEl);
+      colEl.appendChild(bodyEl);
+    }
     ui.chart.appendChild(colEl);
   }
 }
