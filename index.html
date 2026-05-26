@@ -3,67 +3,103 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Return Map</title>
-  <link rel="stylesheet" href="./styles.css" />
+  <title>Tabela Periódica · Gerval</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./styles.css"/>
 </head>
 <body>
+
+  <!-- ── HEADER ───────────────────────────────────────────────────── -->
   <header class="topbar">
-    <div class="title-block">
-      <h1>Tabela Periódica</h1>
-      <img class="brand-logo" src="assets/gerval-logo.png" alt="Gerval"/>
-      <div class="subtitle" id="subtitle">Carregando dados…</div>
-    </div>
 
-    <div class="controls">
-      <div class="control-row">
-        <div class="control-group">
-          <div class="control-label">Geografia</div>
-          <div class="segmented" role="group" aria-label="Geografia">
-            <button id="geo-br" class="segmented-btn is-active" type="button">Brasil</button>
-            <button id="geo-ex" class="segmented-btn" type="button">Exterior</button>
-          </div>
-        </div>
+    <div class="topbar-inner">
 
-        <div class="control-group">
-          <div class="control-label">Display</div>
-          <div class="segmented" role="group" aria-label="Display">
-            <button id="mode-stacked" class="segmented-btn is-active" type="button">Stacked</button>
-            <button id="mode-zero" class="segmented-btn" type="button">Relative to zero</button>
-            <button id="mode-asset" class="segmented-btn" type="button">Relative to asset</button>
-          </div>
-        </div>
-
-        <div class="control-group ref-asset" id="refAssetGroup" style="display:none;">
-          <div class="control-label">Ativo de referência</div>
-          <select id="refAssetSelect"></select>
-        </div>
-
-        <div class="control-group">
-          <div class="control-label">Highlight</div>
-          <div class="segmented" role="group" aria-label="Highlight">
-            <button id="hl-class" class="segmented-btn is-active" type="button">Classe</button>
-            <button id="hl-asset" class="segmented-btn" type="button">Ativo</button>
-            <button id="hl-return" class="segmented-btn" type="button">Retorno</button>
-          </div>
+      <!-- Identidade -->
+      <div class="identity">
+        <img class="brand-logo" src="assets/gerval-logo.png" alt="Gerval"/>
+        <div class="identity-text">
+          <h1>Tabela Periódica</h1>
+          <div class="subtitle" id="subtitle">Carregando dados…</div>
         </div>
       </div>
 
-      <div class="legend-row" id="legendRow"></div>
-    </div>
+      <!-- Controles -->
+      <div class="controls">
+
+        <div class="control-row">
+
+          <div class="control-group">
+            <div class="control-label">Geografia</div>
+            <div class="segmented" role="group" aria-label="Geografia">
+              <button id="geo-br" class="segmented-btn is-active" type="button">Brasil</button>
+              <button id="geo-ex" class="segmented-btn" type="button">Exterior</button>
+            </div>
+          </div>
+
+          <div class="control-divider" aria-hidden="true"></div>
+
+          <div class="control-group">
+            <div class="control-label">Display</div>
+            <div class="segmented" role="group" aria-label="Display">
+              <button id="mode-stacked"  class="segmented-btn is-active" type="button">Stacked</button>
+              <button id="mode-zero"     class="segmented-btn"           type="button">Relative to zero</button>
+              <button id="mode-asset"    class="segmented-btn"           type="button">Relative to asset</button>
+            </div>
+          </div>
+
+          <div class="control-group ref-asset" id="refAssetGroup" style="display:none;">
+            <div class="control-label">Ativo de referência</div>
+            <select id="refAssetSelect"></select>
+          </div>
+
+          <div class="control-divider" aria-hidden="true"></div>
+
+          <div class="control-group">
+            <div class="control-label">Highlight</div>
+            <div class="segmented" role="group" aria-label="Highlight">
+              <button id="hl-class"  class="segmented-btn is-active" type="button">Classe</button>
+              <button id="hl-asset"  class="segmented-btn"           type="button">Ativo</button>
+              <button id="hl-return" class="segmented-btn"           type="button">Retorno</button>
+            </div>
+          </div>
+
+        </div><!-- /control-row -->
+
+        <!-- Legenda dinâmica -->
+        <div class="legend-row" id="legendRow"></div>
+
+      </div><!-- /controls -->
+
+    </div><!-- /topbar-inner -->
   </header>
 
+  <!-- ── CHART ────────────────────────────────────────────────────── -->
   <main class="main">
     <div class="chart-wrap">
       <div class="chart" id="chart"></div>
     </div>
-
-    <div class="footnote">
-      <div><strong>Aviso:</strong> desempenho passado não é garantia de resultados futuros.</div>
-      <div>*A partir de 01/08/2017.</div>
-      <div class="muted">Fonte: Quantum, Bloomberg e ABS.</div>
-    </div>
   </main>
 
+  <!-- ── FOOTER ───────────────────────────────────────────────────── -->
+  <footer class="footnote">
+    <div class="footnote-inner">
+      <p class="footnote-disclaimer">
+        Rentabilidade passada não é garantia de rentabilidade futura.
+      </p>
+      <div class="footnote-meta">
+        <span class="footnote-period">
+          <strong>Brasil:</strong> 2016–2025 (fechamento)
+          &nbsp;·&nbsp;
+          <strong>Exterior:</strong> 01/08/2017–2025 (fechamento)
+        </span>
+        <span class="footnote-source">Fonte: Quantum, Bloomberg e ABS.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Tooltip global -->
   <div class="tooltip" id="tooltip" style="display:none;"></div>
 
   <script type="module" src="./app.js"></script>
