@@ -45,7 +45,7 @@ const btn = {
   modeAsset: document.getElementById("mode-asset"),
   hlClass: document.getElementById("hl-class"),
   // Pode não existir no HTML (nós criamos via JS se faltar)
-  hlAsset: document.getElementById("hl-asset"),
+
   hlReturn: document.getElementById("hl-return"),
 };
 
@@ -53,25 +53,10 @@ function setActive(el, active){
   el.classList.toggle("is-active", !!active);
 }
 
-// Deixa os highlights em PT-BR e cria o botão "Ativo" caso não exista no HTML
+// Inicializa labels dos botões de highlight (sem o botão "Ativo", removido)
 function initHighlightButtons(){
-  // Renomeia labels
   if (btn.hlClass) btn.hlClass.textContent = "Classe";
   if (btn.hlReturn) btn.hlReturn.textContent = "Retorno";
-
-  const group = document.querySelector('.segmented[aria-label="Highlight"]');
-  if (!btn.hlAsset && group){
-    const b = document.createElement("button");
-    b.id = "hl-asset";
-    b.type = "button";
-    b.className = "segmented-btn";
-    b.textContent = "Ativo";
-    // Insere entre Classe e Retorno (se existir)
-    if (btn.hlReturn) group.insertBefore(b, btn.hlReturn);
-    else group.appendChild(b);
-    btn.hlAsset = b;
-  }
-  if (btn.hlAsset) btn.hlAsset.textContent = "Ativo";
 }
 
 // Basic utilities
@@ -1051,23 +1036,12 @@ function wireUI(){
   btn.hlClass.addEventListener("click", ()=>{
     state.highlightMode = "class";
     setActive(btn.hlClass, true);
-    if (btn.hlAsset) setActive(btn.hlAsset, false);
     setActive(btn.hlReturn, false);
     refresh();
   });
-  if (btn.hlAsset){
-    btn.hlAsset.addEventListener("click", ()=>{
-      state.highlightMode = "asset";
-      setActive(btn.hlClass, false);
-      setActive(btn.hlAsset, true);
-      setActive(btn.hlReturn, false);
-      refresh();
-    });
-  }
   btn.hlReturn.addEventListener("click", ()=>{
     state.highlightMode = "return";
     setActive(btn.hlClass, false);
-    if (btn.hlAsset) setActive(btn.hlAsset, false);
     setActive(btn.hlReturn, true);
     refresh();
   });
