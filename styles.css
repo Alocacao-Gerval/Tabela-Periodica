@@ -269,7 +269,7 @@ body {
    ══════════════════════════════════════════════════════════════════ */
 .main {
   flex: 1;
-  padding: 14px 18px calc(var(--footer-h) + 14px);
+  padding: 14px 18px 14px;
   min-height: 0;
 }
 
@@ -301,11 +301,11 @@ body {
 }
 
 .col-header {
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--clr-ink-muted);
+  color: var(--clr-ink-mid);
   text-align: center;
   margin-bottom: 5px;
   white-space: nowrap;
@@ -475,16 +475,10 @@ body {
    FOOTER — fixo no bottom, nunca se esconde atrás dos cards
    ══════════════════════════════════════════════════════════════════ */
 .footnote {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: var(--footer-h);
-  z-index: 20;
-  background: rgba(240,242,245,.94);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  /* Estático no fluxo: sempre visível abaixo da tabela, nunca sobrepõe cards */
+  background: var(--clr-bg);
   border-top: 1px solid var(--clr-border);
+  flex-shrink: 0;
 }
 
 .footnote-inner {
@@ -580,7 +574,7 @@ body {
   .identity-text h1 { font-size: 13px; }
   .brand-logo { height: 30px; }
   .gradient-bar { width: 120px; }
-  .main { padding: 10px 12px calc(var(--footer-h) + 12px); }
+  .main { padding: 10px 12px 12px; }
   .chart-wrap { padding: 10px 10px 6px; }
   .footnote-inner { flex-direction: column; gap: 2px; padding: 6px 14px; }
 }
