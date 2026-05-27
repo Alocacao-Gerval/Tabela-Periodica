@@ -364,7 +364,7 @@ body {
 }
 
 .card .name {
-  font-size: 11px;   /* nome do ativo */
+  font-size: 16px;   /* nome do ativo */
   font-weight: 600;
   line-height: 1.1;
   flex: 1 1 auto;
@@ -377,7 +377,7 @@ body {
 
 .card .val {
   font-family: var(--font-mono);
-  font-size: 10.5px;   /* número do retorno */
+  font-size: 15px;   /* número do retorno */
   font-weight: 500;
   flex: 0 0 auto;
   white-space: nowrap;
