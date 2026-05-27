@@ -21,8 +21,8 @@
   --clr-header-txt: #ffffff;
 
   /* Cards */
-  --card-w:   130px;      /* largura de cada célula */
-  --card-h:   45px;      /* altura de cada célula — DEVE bater com CARD_H no app.js */
+  --card-w:   120px;      /* largura de cada célula */
+  --card-h:   40px;      /* altura de cada célula — DEVE bater com CARD_H no app.js */
   --col-gap:  4px;      /* espaço entre colunas */
   --radius-sm: 5px;     /* arredondamento dos cards */
   --radius-md: 8px;
@@ -292,7 +292,7 @@ body {
 }
 
 .col-header {
-  font-size: 14px;   /* tamanho dos anos (col-header) */
+  font-size: 15px;   /* tamanho dos anos (col-header) */
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -331,7 +331,7 @@ body {
   background: var(--clr-surface);
   border-top: 1.5px solid rgba(12,18,32,.30);
   border-bottom: 1.5px solid rgba(12,18,32,.30);
-  font-size: 11px;
+  font-size: 15px;      /* anos relative to zero */
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
