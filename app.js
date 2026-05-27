@@ -449,7 +449,7 @@ if (displayMode === "zero"){
 
     // HEADER_H: altura do col-header flutuante no modo zero (deve bater com CSS .col-header--zero height)
     const HEADER_H = 22;
-    const HEADER_GAP = 6; // gap entre cards e o header, em cada lado
+    const HEADER_GAP = 10; // gap entre cards e o header, em cada lado
 
     // Positivos (y < 0): slot = (y - globalMinY)*(CARD_H+GAP), mas devem terminar HEADER_GAP antes do header
     // Negativos (y > 0): slot = posição após o header + HEADER_GAP
