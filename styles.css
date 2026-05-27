@@ -22,8 +22,8 @@
 
   /* Cards */
   --card-w:   114px;      /* largura de cada célula */
-  --card-h:   40px;      /* altura de cada célula — DEVE bater com CARD_H no app.js */
-  --col-gap:  4px;      /* espaço entre colunas */
+  --card-h:   50px;      /* altura de cada célula — DEVE bater com CARD_H no app.js */
+  --col-gap:  8px;      /* espaço entre colunas */
   --radius-sm: 5px;     /* arredondamento dos cards */
   --radius-md: 8px;
   --radius-lg: 12px;
