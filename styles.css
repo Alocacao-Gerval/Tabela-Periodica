@@ -292,7 +292,7 @@ body {
 }
 
 .col-header {
-  font-size: 11px;   /* tamanho dos anos (col-header) */
+  font-size: 14px;   /* tamanho dos anos (col-header) */
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
