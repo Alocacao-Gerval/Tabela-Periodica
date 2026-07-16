@@ -174,7 +174,7 @@ function extractColumns(quantumHeader){
 
     // Retorno (anos / períodos)
     // Aceita "diária" e também CSV com encoding quebrado ("di�ria") via normalize()
-    if (/^retorno\s*-\s*di.?ria\s*\(/.test(hn)){
+    if (/^retorno(\s+no\s+ano)?\s*-\s*di.?ria\s*\(/.test(hn)){
       // (2016)
       const mYear = hs.match(/\((\d{4})\)/);
       if (mYear){
