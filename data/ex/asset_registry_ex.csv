@@ -1,0 +1,20 @@
+asset;class;asset_color;quantum_name;class_color
+Cmdty;Others;#7030A0;S&P GSCI Total Return (Moeda Original);#ED7D31
+EM Eq.;Equities;#203764;MSCI EMTR;#002A54
+SPX;Equities;#5B9BD5;S&P 500 Total Return (Moeda Original);#002A54
+60-40;Benchmark;#70AD47;Pfolio 60-40;#FFC000
+Arroj;Perfil;#A6A6A6;P. Ext. Arroj;#D9D9D9
+Cembi BR;Benchmark;#833C0C;CEMBI B BR;#FFC000
+Mod;Perfil;#D9D9D9;P. Ext. Mod;#D9D9D9
+Cons;Perfil;#FFFFFF;P. Ext. Cons;#D9D9D9
+CPI;Benchmark;#F5DEB3;CPI;#FFC000
+US HY;Fixed Income;#C65911;US Barclays Corporate High Yield Total Return (Moeda Original);#009D90
+SOFR;Benchmark;#0070C0;0-3m;#FFC000
+REIT;Others;#806000;MSCI US REIT (Moeda Original);#ED7D31
+CDI Dolar;Fixed Income;#203764;CDI Dólar;#009D90
+Gold;Others;#C00000;Gold - COMEX (Moeda Original);#ED7D31
+AGG;Fixed Income;#ED7D31;US Barclays Agg Total Return Value (Moeda Original);#009D90
+Stark B;Fixed Income;#C65911;Stark Fund B;#009D90
+Stark C;Others;#31C5AC;Stark Fund C;#ED7D31
+Cembi 90;Benchmark;#EE6E8C;Cembi 90;#FFC000
+DXY;Others;#66FF33;US Dollar Index - DXY (Moeda Original);#ED7D31
