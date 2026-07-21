@@ -11,7 +11,7 @@ CPI;Benchmark;#F5DEB3;CPI;#FFC000
 US HY;Fixed Income;#C65911;US Barclays Corporate High Yield Total Return (Moeda Original);#009D90
 SOFR;Benchmark;#0070C0;0-3m;#FFC000
 REIT;Others;#806000;MSCI US REIT (Moeda Original);#ED7D31
-CDI;Fixed Income;#203764;CDI D�lar;#009D90
+CDI US;Fixed Income;#203764;CDI D�lar;#FFC000
 Gold;Others;#C00000;Gold - COMEX (Moeda Original);#ED7D31
 AGG;Fixed Income;#ED7D31;US Barclays Agg Total Return Value (Moeda Original);#009D90
 HFRX+1;Benchmark;#C399A6;�ndice HFRX Global Hedge Fund Index (Moeda Original) +1,000%;#FFC000
