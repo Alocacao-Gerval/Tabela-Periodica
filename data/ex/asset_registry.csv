@@ -11,12 +11,10 @@ CPI;Benchmark;#F5DEB3;CPI;#FFC000
 US HY;Fixed Income;#C65911;US Barclays Corporate High Yield Total Return (Moeda Original);#009D90
 SOFR;Benchmark;#0070C0;0-3m;#FFC000
 REIT;Others;#806000;MSCI US REIT (Moeda Original);#ED7D31
-CDI US;Fixed Income;#203764;CDI Dï¿½lar;#FFC000
+CDI Dolar;Fixed Income;#203764;CDI Dólar;#009D90
 Gold;Others;#C00000;Gold - COMEX (Moeda Original);#ED7D31
 AGG;Fixed Income;#ED7D31;US Barclays Agg Total Return Value (Moeda Original);#009D90
-HFRX+1;Benchmark;#C399A6;ï¿½ndice HFRX Global Hedge Fund Index (Moeda Original) +1,000%;#FFC000
 Stark B;Fixed Income;#C65911;Stark Fund B;#009D90
 Stark C;Others;#31C5AC;Stark Fund C;#ED7D31
-Cembi90;Benchmark;#EE6E8C;Cembi 90;#FFC000
+Cembi 90;Benchmark;#EE6E8C;Cembi 90;#FFC000
 DXY;Others;#66FF33;US Dollar Index - DXY (Moeda Original);#ED7D31
-
