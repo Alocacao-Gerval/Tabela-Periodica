@@ -282,6 +282,9 @@ body {
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-xl);
   padding: 14px 14px 14px;
+  /* cresce com a largura total da tabela para o fundo acompanhar o scroll */
+  width: max-content;
+  min-width: 100%;
 }
 
 /* chart-scroll: removido — scroll feito pelo html */
