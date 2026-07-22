@@ -35,7 +35,7 @@
 
 /* ── Reset ──────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
-html { overflow-x: auto; }
+html { overflow-x: hidden; }
 
 body {
   margin: 0;
@@ -267,7 +267,14 @@ body {
    ══════════════════════════════════════════════════════════════════ */
 .main {
   padding: 14px 18px 14px;
+  /* scroll horizontal só da tabela — header e footer ficam full-width fora daqui */
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--clr-border) transparent;
 }
+.main::-webkit-scrollbar { height: 5px; }
+.main::-webkit-scrollbar-track { background: transparent; }
+.main::-webkit-scrollbar-thumb { background: var(--clr-border); border-radius: 99px; }
 
 /* chart-wrap: apenas visual, zero overflow */
 .chart-wrap {
@@ -283,6 +290,7 @@ body {
 .chart {
   display: flex;
   gap: var(--col-gap);
+  min-width: max-content;
 }
 
 /* ── Coluna ──────────────────────────────────────────────────── */
